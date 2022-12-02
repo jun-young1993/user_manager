@@ -1,3 +1,4 @@
+/**
 import 'package:flutter/material.dart';
 import 'package:pokedex/configs/constants.dart';
 
@@ -17,3 +18,5 @@ extension BuildContextX on BuildContext {
     return size * currentSize / designSize;
   }
 }
+
+ */

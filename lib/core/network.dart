@@ -1,3 +1,4 @@
+/**
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:pokedex/core/utils.dart';
@@ -52,3 +53,4 @@ enum RequestMethod {
 extension RequestMethodX on RequestMethod {
   String get value => getEnumValue(this).toUpperCase();
 }
+ */

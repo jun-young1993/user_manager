@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:user_manager/config/constants.dart';
 import 'package:user_manager/config/images.dart';
 import 'package:user_manager/ui/widgets/menu_background.dart';
+import 'package:user_manager/domain/entities/category.dart';
+import 'package:user_manager/ui/widgets/menu_card.dart';
+
 part '../home/sections/header_card_content.dart';
 
 
