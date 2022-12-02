@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_manager/data/repositories/user_repository.dart';
 import 'package:user_manager/main_container.dart';
+import 'package:user_manager/service/user_service.dart';
+import 'package:user_manager/states/user/user_bloc.dart';
+import 'package:user_manager/app.dart';
 void main() {
-  runApp(const MainApp());
-}
+    WidgetsFlutterBinding.ensureInitialized();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "UserManager",
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MainContainer());
-  }
+  
+  runApp(
+    MultiRepositoryProvider(
+      providers : [
+        RepositoryProvider<UserRepository>(create : (context) => UserDefaultRepository())
+      ],
+      child : MultiBlocProvider(
+        providers : [
+          BlocProvider<UserBloc>(
+            create: (context) => UserBloc(),
+          ),
+        ],
+        child : UserManagerApp()
+      )
+    )
+  );
 }
-
-// MaterialApp(
-//       home: DefaultTabController(
-//           child: Scaffold(
-//     appBar: AppBar(
-//         title: Text("Tabs"),
-//         bottom: TabBar(
-//           tabs: [Tab(icon: Icon(Icons.apps), text: "앱")],
-//         )),
-//   )))

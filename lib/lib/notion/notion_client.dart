@@ -16,7 +16,8 @@ class BaseClient {
   defaultHeader(){
     return {
           HttpHeaders.authorizationHeader : "Bearer $token",
-          "Notion-Version" : version
+          "Notion-Version" : version,
+          'Content-Type': 'application/json'
       };
   }
 
@@ -35,7 +36,7 @@ class NotionDatabasesClient extends BaseClient{
   NotionDatabasesClient() : super();
 
 
-  Future query(String id) async{
+  Future query(String id) async {
     http.Response res = 
         await http.post(Uri.https(host,'/$v/$path/$id/query'),
           headers: defaultHeader()
@@ -43,13 +44,35 @@ class NotionDatabasesClient extends BaseClient{
 
         return notionResponse(res);
   }
+
+}
+
+class NotionPagesClient extends BaseClient{
+  @override
+  final String path = 'pages';
+
+  NotionPagesClient() : super();
+
+
+  Future create(page) async {
+    http.Response res = 
+        await http.post(Uri.https(host,'/$v/$path'),
+          body : jsonEncode(page),
+          headers: defaultHeader()
+        );
+
+        return notionResponse(res);
+  }
+
 }
 
 class NotionClient {
   NotionDatabasesClient databases;
-
+  NotionPagesClient pages;
 
   
   NotionClient() 
-  : this.databases = NotionDatabasesClient();
+  : this.databases = NotionDatabasesClient(),
+    this.pages = NotionPagesClient();
+
 }

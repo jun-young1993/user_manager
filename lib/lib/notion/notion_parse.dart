@@ -1,3 +1,3 @@
-// class NotionParse() {
-//   NotionParse({});
-// }
+class NotionParse {
+  NotionParse(result);
+}

@@ -1,5 +1,8 @@
 
 
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -60,12 +63,9 @@ class _MyHomePageState extends State {
  
     
   }
-  final Map<String, TextEditingController> sigUpController = {
-      'firstName': TextEditingController(),
-      'lastName': TextEditingController(),
-      'email': TextEditingController(),
-      'phone': TextEditingController(),
-      'password': TextEditingController(),
+  final Map<String, TextEditingController> addUserController = {
+      'name': TextEditingController(),
+      'phone_number': TextEditingController()
     };
 
   @override
@@ -86,6 +86,7 @@ class _MyHomePageState extends State {
                    
                     // UserService().index();
                     showDialog(
+                      barrierDismissible: false,
                       context : context,
                       builder : (BuildContext context){
                         return AlertDialog(
@@ -112,6 +113,7 @@ class _MyHomePageState extends State {
                                         Padding(
                                           padding: EdgeInsets.all(8.0),
                                           child: TextFormField(
+                                            controller: addUserController['name'],
                                             decoration: const InputDecoration(hintText : "이름"),
                                             validator: (value) {
                                               if(value == null || value.isEmpty){
@@ -123,15 +125,25 @@ class _MyHomePageState extends State {
                                         Padding(
                                           padding: EdgeInsets.all(8.0),
                                           child: TextFormField(
-                                            controller: sigUpController['firstName'],
+                                            controller: addUserController['phone_number'],
                                             validator: (value) {
+                                              Pattern phonePattern = r'^01$';
+                                              RegExp phoneRegExp = new RegExp(r'^(?:\d{3}|\(\d{3}\))([-\/\.])\d{4}\1\d{4}$');
                                               if(value == null || value.isEmpty){
                                                 return "전화번호를 입력해주세요.";
                                               }
+                                              if(!phoneRegExp.hasMatch(value)){
+                                                return "###-####-#### 형식으로 입력해주세요";
+                                              }
                                               return null;
                                             },
+                                            keyboardType: TextInputType.phone,
                                             decoration: const InputDecoration(hintText : "전화번호"),
-                                            inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),],
+                                            
+                                            //  inputFormatters: [ 
+                                            //   FilteringTextInputFormatter.allow(RegExp('^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}')),
+                                            //  ],
+                                            // inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),],
                         
                                           ),
                                         ),
@@ -146,15 +158,33 @@ class _MyHomePageState extends State {
                               onPressed :() {
                                 print(  _formKey.currentState);
                                 
-                                  if(_formKey.currentState!.validate()){
+                                  if(!_formKey.currentState!.validate()){
                                       // _formKey.currentState!.save();
                                      // To get data I wrote an extension method bellow
                                       return;
                                       // print(_formKey.values);
                                   };
                                 
-                                    final data = sigUpController.values;
-                                    print(data);
+                                UserService().create({
+                                  "name" : addUserController['name']!.text,
+                                  "phone_number" : addUserController['phone_number']!.text
+                                })
+                                .then((result){
+                                  
+                                  
+                                  if(result['object'] != 'error'){
+                                    setState(() {
+                                      print(result['id']);
+                                      
+                                      _employees.add(Employee(result['id'],result['properties']['name']['rich_text'][0]["text"]["content"],result['properties']['phone_number']["phone_number"]));
+                                      _employeeDataSource = EmployeeDataSource(_employees); 
+                                      Navigator.of(context).pop();
+                                    });
+                                  }
+                                  
+                                  
+                                });
+                                
                                 
                                 //       _formKey.currentState.save();
                                 // }
@@ -182,15 +212,22 @@ class _MyHomePageState extends State {
             ]
           ),
           body: SfDataGrid(
+            onCellTap :(details) {
+              inspect(details);
+            },
             allowSorting: true,
             selectionMode: SelectionMode.single,
             source: _employeeDataSource,
+            columnWidthMode: ColumnWidthMode.auto,
+          //     horizontalScrollPhysics: NeverScrollableScrollPhysics(),
+          // verticalScrollPhysics: NeverScrollableScrollPhysics(),
+            isScrollbarAlwaysShown: true,
             columns: [
               GridTextColumn(
                   visible: false,
                   columnName: 'id',
                   label: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 60.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     alignment: Alignment.centerRight,
                     child: Text(
                       'ID',
@@ -203,8 +240,19 @@ class _MyHomePageState extends State {
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Name',
-                        overflow: TextOverflow.ellipsis,
+                        '이름',
+                        // overflow: TextOverflow.ellipsis,
+                      ))),
+              GridTextColumn(
+                  columnName: 'phone_number',
+                  label: Container(
+                      // padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '연락처',
+                        softWrap: true,
+                        
+                        // overflow: TextOverflow.ellipsis,
                       ))),
             ],
           ),
@@ -219,7 +267,7 @@ class _MyHomePageState extends State {
     final List<Employee> initEmployee = [];
     users.forEach((user) {
       
-      initEmployee.add(Employee(user['id'], user['name']));
+      initEmployee.add(Employee(user['id'], user['name'], user['phone_number']));
     });
     
     
@@ -234,7 +282,8 @@ class EmployeeDataSource extends DataGridSource {
     dataGridRows = employees
         .map<DataGridRow>((dataGridRow) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'id', value: dataGridRow.id),
-              DataGridCell<String>(columnName: 'name', value: dataGridRow.name)
+              DataGridCell<String>(columnName: 'name', value: dataGridRow.name),
+              DataGridCell<String>(columnName: 'phone_number', value: dataGridRow.phone_number)
             ]))
         .toList();
   }
@@ -252,16 +301,18 @@ class EmployeeDataSource extends DataGridSource {
                ? Alignment.centerRight
                : Alignment.centerLeft,
           child: Text(
-        dataGridCell.value.toString(),
-        overflow: TextOverflow.ellipsis,
-      ));
+              dataGridCell.value.toString(),
+              softWrap: true,
+              // overflow: TextOverflow.ellipsis,
+          ));
     }).toList());
   }
 }
 
 class Employee {
-  Employee(this.id, this.name);
+  Employee(this.id, this.name, this.phone_number);
   final String id;
   final String name;
+  final String phone_number;
   
 }
