@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:user_manager/domain/entities/category.dart';
-/**
-class MenuCard extends StatelessWidget {
+
+class CategoryCard extends StatelessWidget {
   final Category category;
   final void Function()? onPress;
-  const MenuCard(
+  const CategoryCard(
     this.category,{
     this.onPress
   });
@@ -19,4 +19,4 @@ class MenuCard extends StatelessWidget {
   }
 
 }
- */
+ 

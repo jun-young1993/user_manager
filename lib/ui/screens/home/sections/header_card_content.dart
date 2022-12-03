@@ -5,8 +5,8 @@ part of '../home.dart';
 class _HeaderCardContent extends StatelessWidget {
     var isDark = false;
     static const double height = 582;
-    void _onSelectCategory(category) {
-    
+    void _onSelectCategory(Category category) {
+       //AppNavigator.push(category.route);
     }
     @override
     Widget build(BuildContext context) {
@@ -83,18 +83,16 @@ Widget _buildTitle() {
         childAspectRatio: 2.6,
         mainAxisSpacing: 15,
       ),
-      // itemCount: categories.length,
-      itemCount : 4,
+      itemCount: categories.length,
       itemBuilder: (context, index) {
         
-
+          return Text('hi');
         //return MenuCard();
-        return Text("hi");
         // return 
-        // CategoryCard(
-        //   categories[index],
-        //   onPress: () => _onSelectCategory(categories[index]),
-        // );
+         CategoryCard(
+           categories[index],
+           onPress: () => _onSelectCategory(categories[index]),
+        );
       },
     );
   }
