@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/config/colors.dart';
 import 'package:user_manager/config/images.dart';
 
-class MenuBackground extends StatelessWidget {
+class CategoryBackground extends StatelessWidget {
   static const double _pokeballWidthFraction = 0.664;
 
   final Widget child;
   final Widget? floatingActionButton;
 
-  const MenuBackground({
+  const CategoryBackground({
     Key? key,
     required this.child,
     this.floatingActionButton,

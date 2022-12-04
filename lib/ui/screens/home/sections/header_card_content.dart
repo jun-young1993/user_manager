@@ -6,13 +6,15 @@ class _HeaderCardContent extends StatelessWidget {
     var isDark = false;
     static const double height = 582;
     void _onSelectCategory(Category category) {
-       //AppNavigator.push(category.route);
+
+      print("cateogry click $category");
+       AppNavigator.push(category.route);
     }
     @override
     Widget build(BuildContext context) {
       return Container( 
         clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
         // color: Colors.white,
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
         // border: Border(
@@ -21,7 +23,7 @@ class _HeaderCardContent extends StatelessWidget {
         //   ),
         // ),
         ),
-        child : MenuBackground(
+        child : CategoryBackground(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -52,47 +54,47 @@ class _HeaderCardContent extends StatelessWidget {
         
       );
     }
-}
 
-Widget _buildTitle() {
-    return Expanded(
-      child: Container(
-        constraints: BoxConstraints.expand(),
-        padding: EdgeInsets.all(28),
-        alignment: Alignment.bottomLeft,
-        child: Text(
-          'What Pokemon\nare you looking for?',
-          style: TextStyle(
-            fontSize: 30,
-            height: 1.6,
-            fontWeight: FontWeight.w900,
+    Widget _buildTitle() {
+      return Expanded(
+        child: Container(
+          constraints: const BoxConstraints.expand(),
+          padding: const EdgeInsets.all(28),
+          alignment: Alignment.bottomLeft,
+          child: const Text(
+            'User Manager Category?',
+            style: TextStyle(
+              fontSize: 30,
+              height: 1.6,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
-  Widget _buildCategories(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(28, 42, 28, 62),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        childAspectRatio: 2.6,
-        mainAxisSpacing: 15,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        
-          return Text('hi');
-        //return MenuCard();
-        // return 
-         CategoryCard(
-           categories[index],
-           onPress: () => _onSelectCategory(categories[index]),
-        );
-      },
-    );
-  }
+    Widget _buildCategories(BuildContext context) {
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(28, 42, 28, 62),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          childAspectRatio: 2.6,
+          mainAxisSpacing: 15,
+        ),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+
+          //return MenuCard();
+          return
+            CategoryCard(
+                categories[index],
+                onPress: () => _onSelectCategory(categories[index])
+            );
+        },
+      );
+    }
+}
+
