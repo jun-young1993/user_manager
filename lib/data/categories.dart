@@ -1,6 +1,6 @@
 
 import 'package:user_manager/domain/entities/category.dart';
-import 'package:user_manager/config/colors.dart';
+import 'package:user_manager/configs/colors.dart';
 import 'package:user_manager/routes.dart';
 const List<Category> categories = [
   Category(name: 'home1', color: AppColors.teal, route: Routes.home),

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/routes.dart';
-import 'package:user_manager/config/constants.dart';
+import 'package:user_manager/configs/constants.dart';
 
 
 /// MaterialApp

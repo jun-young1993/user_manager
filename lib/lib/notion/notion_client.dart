@@ -53,6 +53,14 @@ class NotionPagesClient extends BaseClient{
 
   NotionPagesClient() : super();
 
+  Future find (String id) async {
+    http.Response res = 
+        await http.get(Uri.https(host,'/$v/$path/$id'),
+          headers: defaultHeader()
+        );
+        
+        return notionResponse(res);
+  }
 
   Future create(page) async {
     http.Response res = 

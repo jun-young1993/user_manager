@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:user_manager/config/colors.dart';
-import 'package:user_manager/config/images.dart';
+import 'package:user_manager/configs/colors.dart';
+import 'package:user_manager/configs/images.dart';
 
 class CategoryBackground extends StatelessWidget {
   static const double _pokeballWidthFraction = 0.664;

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class UserColor {
+  static const Color defaultColor = Color(0xFFA8A878);
+}
+
 class AppColors {
   static const Color beige = Color(0xFFA8A878);
   static const Color black = Color(0xFF303943);

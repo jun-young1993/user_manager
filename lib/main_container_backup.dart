@@ -13,13 +13,6 @@ class MainContainer extends StatelessWidget {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        // appBar: AppBar(
-        //     title : const Text("UserManager"),
-        //     leading: const Icon(Icons.favorite, color : Colors.pink, size : 24.0, semanticLabel: "test favorite icon",),
-        //     // bottom: TabBar(
-        //     //   tabs: tabs,
-        //     // ),
-        //     ),
         bottomNavigationBar:
             Container(color: const Color(0xFF3F5AA6), child: TabBar(tabs: tabs)),
         body: TabBarView(
