@@ -7,6 +7,7 @@ import 'package:user_manager/ui/screens/user_info/state_provider.dart';
 import 'package:user_manager/ui/widgets/animated_fade.dart';
 import 'package:user_manager/ui/widgets/main_app_bar.dart';
 import 'package:user_manager/ui/widgets/auto_slideup_panel.dart';
+import 'package:user_manager/ui/widgets/main_tab_view.dart';
 import 'package:user_manager/configs/images.dart';
 import 'package:user_manager/configs/colors.dart';
 
@@ -58,6 +59,7 @@ class _UserInfoState extends State<UserInfo> with TickerProviderStateMixin {
         body : Stack(
           children: <Widget>[
             _BackgroundDecoration(),
+            _UserInfoCard(),
             _UserOverallInfo(),
           ],
         )

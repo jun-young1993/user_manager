@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/configs/colors.dart';
 import 'package:user_manager/configs/images.dart';
-
+import 'package:user_manager/states/theme/theme_cubit.dart';
 class CategoryBackground extends StatelessWidget {
   static const double _pokeballWidthFraction = 0.664;
 
@@ -28,8 +28,8 @@ class CategoryBackground extends StatelessWidget {
     final pokeballTopMargin = -(pokeballSize / 2 - safeAreaTop - appBarHeight / 2);
     final pokeballRightMargin = -(pokeballSize / 2 - iconButtonPadding - iconSize / 2);
 
-    // var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
-    var isDark = false;
+    var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
+    var isDark = themeCubit.isDark;
     return Scaffold(
       body : Stack(
         fit: StackFit.expand, 

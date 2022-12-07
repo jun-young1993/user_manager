@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/routes.dart';
 import 'package:user_manager/configs/images.dart';
+import 'package:user_manager/core/extensions/animation.dart';
 import 'package:user_manager/ui/widgets/category_background.dart';
 import 'package:user_manager/ui/widgets/main_app_bar.dart';
 import 'package:user_manager/ui/widgets/user_card.dart';
+import 'package:user_manager/ui/widgets/fab.dart';
+import 'package:user_manager/ui/widgets/animated_overlay.dart';
 import 'package:user_manager/states/user/user_bloc.dart';
 import 'package:user_manager/states/user/user_event.dart';
 import 'package:user_manager/states/user/user_selector.dart';
 import 'package:user_manager/states/user/user_state.dart';
 import 'package:user_manager/domain/entities/user.dart';
 
+
 part 'sections/user_grid.dart';
+part 'sections/fab_menu.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen();
@@ -36,7 +41,8 @@ class _UserScreenState extends State<UserScreen> {
     return CategoryBackground(
             child: Stack(
               children: [
-                _UserGrid()
+                _UserGrid(),
+                _FabMenu()
               ]
             )
     );

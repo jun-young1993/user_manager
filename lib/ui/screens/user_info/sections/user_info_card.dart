@@ -25,13 +25,16 @@ class _UserInfoCardState extends State<_UserInfoCard> {
       maxHeight: cardMaxHeight,
       onPanelSlide: (position) => slideController.value = position,
       child: CurrentUserSelector((user) {
-        return Text(user.phoneNumber);
-        // return MainTabView(
-        //   paddingAnimation: slideController,
-        //   tabs : [
-
-        //   ]
-        // );
+        print("user_info_card tab view ${user}");
+        return MainTabView(
+          paddingAnimation: slideController,
+          tabs : [
+            MainTabData(
+              label : "test",
+              child : Text('hi')
+            )
+          ]
+        );
       }),
     );
   }
