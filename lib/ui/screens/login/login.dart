@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _asyncMethod() async {
      databaseInfos = await storage.read(key : 'database');
 
-    print("userInfo ${databaseInfos}");
+    
     if(databaseInfos != null){
       inspect(jsonDecode(databaseInfos));
       NotionDatabase.userId = jsonDecode(databaseInfos)["userId"];
@@ -66,7 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
           key : "database",
           value: jsonEncode(databaseIds)
         );
-        _moveHome();
+        _asyncMethod();
+        
       },
       child : Text("시작하기"),
     );
