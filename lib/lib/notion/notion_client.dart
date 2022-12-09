@@ -45,6 +45,16 @@ class NotionDatabasesClient extends BaseClient{
         return notionResponse(res);
   }
 
+    Future create(database) async {
+    http.Response res = 
+        await http.post(Uri.https(host,'/$v/$path'),
+          body : jsonEncode(database),
+          headers: defaultHeader()
+        );
+
+        return notionResponse(res);
+  }
+
 }
 
 class NotionPagesClient extends BaseClient{

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_manager/data/categories.dart';
 import 'package:user_manager/routes.dart';
 import 'package:user_manager/configs/images.dart';
 import 'package:user_manager/core/extensions/animation.dart';

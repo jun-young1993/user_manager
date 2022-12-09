@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/routes.dart';
 import 'package:user_manager/configs/constants.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'; 
 
 /// MaterialApp
 class UserManagerApp extends StatelessWidget {
     
+
+    static final storage = FlutterSecureStorage(); 
+
+
+
     @override
     Widget build(BuildContext context){
     

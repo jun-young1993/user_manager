@@ -12,6 +12,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   bool get isDark => _isDark;
 
   void toggleTheme() {
+    print("isDark $isDark");
     _isDark = !_isDark;
     if (_isDark) {
       emit(ThemeDark(message: 'Dark Theme'));

@@ -3,6 +3,7 @@ import 'package:user_manager/core/fade_page_route.dart';
 import 'package:user_manager/ui/screens/calendar/calendar.dart';
 import 'package:user_manager/ui/screens/config/config.dart';
 import 'package:user_manager/ui/screens/home/home.dart';
+import 'package:user_manager/ui/screens/login/login.dart';
 import 'package:user_manager/ui/screens/user/user.dart';
 import 'package:user_manager/ui/screens/user_info/user_info.dart';
 enum Routes { home, config, user, userInfo, calendar}
@@ -43,8 +44,9 @@ class AppNavigator {
       case _Paths.calendar : 
         return FadeRoute(page: CalendarScreen());
       case _Paths.home:
-      default:
         return FadeRoute(page: HomeScreen());
+      default:
+        return FadeRoute(page: LoginScreen());
     }
   }
 

@@ -3,7 +3,7 @@ part of '../home.dart';
 
 
 class _HeaderCardContent extends StatelessWidget {
-    var isDark = false;
+    
     static const double height = 582;
     void _onSelectCategory(Category category) {
 
@@ -12,6 +12,8 @@ class _HeaderCardContent extends StatelessWidget {
     }
     @override
     Widget build(BuildContext context) {
+      var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
+          var isDark = themeCubit.isDark;
       return Container( 
         clipBehavior: Clip.hardEdge,
         decoration: const BoxDecoration(
@@ -34,7 +36,7 @@ class _HeaderCardContent extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     onPressed: (() {
-                      
+                                    themeCubit.toggleTheme();
                     }),
                     padding: EdgeInsets.only(left : 28),
                      icon: Icon(

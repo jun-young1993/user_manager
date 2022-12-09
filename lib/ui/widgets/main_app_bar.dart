@@ -9,10 +9,10 @@ class MainSliverAppBar extends SliverAppBar{
   static const TextStyle _textStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: kToolbarHeight / 3, height : 1);
 
   MainSliverAppBar({
-    GlobalKey? appBarKey,
-    String title = "임시", //AppConstants.name,
-    double height = kToolbarHeight + mainAppbarPadding * 2,
-  double expandedFontSize = 30,
+      GlobalKey? appBarKey,
+      String title = "", //AppConstants.name,
+      double height = kToolbarHeight + mainAppbarPadding * 2,
+      double expandedFontSize = 30,
       void Function()? onLeadingPress = AppNavigator.pop,
       void Function()? onTrailingPress,
       required BuildContext context})
@@ -32,12 +32,12 @@ class MainSliverAppBar extends SliverAppBar{
             ),
           ),
           actions: [
-            IconButton(
-              padding: EdgeInsets.symmetric(horizontal: mainAppbarPadding),
-              icon: Icon(Icons.favorite_border_outlined,
-                  color: Theme.of(context).textTheme.bodyLarge!.color),
-              onPressed: onTrailingPress,
-            ),
+            // IconButton(
+            //   padding: EdgeInsets.symmetric(horizontal: mainAppbarPadding),
+            //   icon: Icon(Icons.favorite_border_outlined,
+            //       color: Theme.of(context).textTheme.bodyLarge!.color),
+            //   onPressed: onTrailingPress,
+            // ),
           ],
           flexibleSpace: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {

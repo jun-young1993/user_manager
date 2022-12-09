@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/data/repositories/user_repository.dart';
-import 'package:user_manager/service/user_service.dart';
+
 import 'package:user_manager/states/user/user_bloc.dart';
 import 'package:user_manager/app.dart';
-import 'package:user_manager/data/repositories/user_repository.dart';
+
 import 'package:user_manager/states/theme/theme_cubit.dart';
 void main() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +17,9 @@ void main() async {
       ],
       child : MultiBlocProvider(
         providers : [
+          BlocProvider<UserBloc>(
+            create: (context) => UserBloc(context.read<UserRepository>()),
+          ),
           BlocProvider<UserBloc>(
             create: (context) => UserBloc(context.read<UserRepository>()),
           ),

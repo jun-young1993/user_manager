@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/configs/constants.dart';
+import 'package:user_manager/states/theme/theme_cubit.dart';
 import 'package:user_manager/ui/widgets/category_background.dart';
 import 'package:user_manager/domain/entities/category.dart';
 import 'package:user_manager/ui/widgets/category_card.dart';

@@ -1,17 +1,27 @@
 import 'dart:convert';
 
+import 'package:user_manager/configs/constants.dart';
+import 'package:user_manager/configs/statics/notion_database.dart';
 import 'package:user_manager/lib/notion/notion_client.dart';
 import 'package:user_manager/domain/entities/user.dart';
 import 'package:user_manager/states/user/user_event.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class UserService {
-   final String userDatabaseId = "6828ab9b03c0405a8090d9e99dd3881b";
+    // static final storage = FlutterSecureStorage(); 
+    
+    // final String userDatabaseId = "6828ab9b03c0405a8090d9e99dd3881b";
+    final String userDatabaseId = NotionDatabase.userId;
+    
     NotionClient client = NotionClient();
+    
 
+    
    /// user list
     Future<List<User>> index()async{
+      // final String userDatabaseId = await storage.read(key : 'database').toString();
+    
       final result = await client.databases.query(userDatabaseId);
       final List<User> users = [];
       final results = result['results'];   

@@ -36,6 +36,7 @@ class _UserGridState extends State<_UserGrid>{
       key : _scrollKey,
       headerSliverBuilder: (_, __) => [
         MainSliverAppBar(
+          title : CategoryNames.user,
           context: context,
         ),
       ],
