@@ -1,3 +1,5 @@
+import 'package:user_manager/domain/entities/user.dart';
+
 abstract class UserEvent {
   const UserEvent();
 }
@@ -14,4 +16,13 @@ class UserSelectChanged extends UserEvent {
   final String id;
   
   const UserSelectChanged({required this.id});
+}
+
+
+class UserCreated extends UserEvent {
+  final UserProperty user;
+
+  const UserCreated(this.user);
+
+
 }

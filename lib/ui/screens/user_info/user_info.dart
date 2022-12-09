@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart' hide AnimatedSlide;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_manager/states/theme/theme_cubit.dart';
 import 'package:user_manager/states/user/user_selector.dart';
 import 'package:user_manager/ui/screens/user_info/state_provider.dart';
 import 'package:user_manager/ui/widgets/animated_fade.dart';
@@ -10,10 +11,12 @@ import 'package:user_manager/ui/widgets/auto_slideup_panel.dart';
 import 'package:user_manager/ui/widgets/main_tab_view.dart';
 import 'package:user_manager/configs/images.dart';
 import 'package:user_manager/configs/colors.dart';
+import 'package:user_manager/domain/entities/user.dart';
 
 part 'sections/background_decoration.dart';
 part 'sections/user_overall_info.dart';
 part 'sections/user_info_card.dart';
+part 'sections/user_info_card_about.dart';
 
 class UserInfo extends StatefulWidget {
   @override

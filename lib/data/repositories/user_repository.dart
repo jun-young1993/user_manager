@@ -3,26 +3,27 @@ import 'package:user_manager/service/user_service.dart';
 
 abstract class UserRepository {
   
-  Future<List<User>> getAllUsers();
-  Future<List> getUsers();
-  Future<User> getUser(String id);
+  Future<List<User>> get();
+  Future<User> find(String id);
+  Future<User> create(UserProperty data);
 }
 
 class UserDefaultRepository extends UserRepository {
   UserDefaultRepository();
 
   @override
-  Future<List<User>> getAllUsers() async {
+  Future<List<User>> get() async {
     return UserService().index();
   }
 
+
   @override
-  Future<List> getUsers() async {
-    return ["test"];
+  Future<User> find(String id) async {
+    return UserService().find(id);
   }
 
   @override
-  Future<User> getUser(String id) async {
-    return UserService().find(id);
+  Future<User> create(UserProperty data) async {
+        return UserService().create(data);
   }
 }

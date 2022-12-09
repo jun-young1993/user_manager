@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserColor {
-  static const Color defaultColor = Color(0xFFA8A878);
+  static const Color defaultColor = Color.fromARGB(255, 136, 136, 82);
 }
 
 class AppColors {

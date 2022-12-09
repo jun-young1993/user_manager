@@ -30,8 +30,8 @@ class _UserInfoCardState extends State<_UserInfoCard> {
           paddingAnimation: slideController,
           tabs : [
             MainTabData(
-              label : "test",
-              child : Text('hi')
+              label : "회원 정보",
+              child : _UserAbout(user)
             )
           ]
         );

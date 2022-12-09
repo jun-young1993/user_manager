@@ -41,6 +41,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   stream_transform: ^2.1.0
   sliding_up_panel: ^2.0.0+1
+  syncfusion_flutter_calendar: ^20.3.60
 
 dev_dependencies:
   flutter_test:

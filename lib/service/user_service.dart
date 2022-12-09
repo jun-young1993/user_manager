@@ -2,6 +2,10 @@ import 'dart:convert';
 
 import 'package:user_manager/lib/notion/notion_client.dart';
 import 'package:user_manager/domain/entities/user.dart';
+import 'package:user_manager/states/user/user_event.dart';
+
+
+
 class UserService {
    final String userDatabaseId = "6828ab9b03c0405a8090d9e99dd3881b";
     NotionClient client = NotionClient();
@@ -46,7 +50,7 @@ class UserService {
     }
 
 
-    Future create(data) async {
+    Future<User> create(UserProperty data) async {
       final result = await client.pages.create({
           "parent": {
               "database_id": userDatabaseId
@@ -56,18 +60,18 @@ class UserService {
                   "rich_text": [
                       {
                           "text": {
-                              "content": data['name']
+                              "content": data.name
                           }
                       }
                   ]
               },
               "phone_number": {
-                  "phone_number": data['phone_number']
+                  "phone_number": data.phoneNumber
               }
           }
       });
-
-      return result;
+      
+      return User(id: result['id'], name: data.name, phoneNumber: data.phoneNumber);
     }
 
     

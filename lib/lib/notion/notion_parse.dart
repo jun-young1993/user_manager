@@ -1,3 +1,0 @@
-class NotionParse {
-  NotionParse(result);
-}

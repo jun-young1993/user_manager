@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:user_manager/core/fade_page_route.dart';
+import 'package:user_manager/ui/screens/calendar/calendar.dart';
 import 'package:user_manager/ui/screens/config/config.dart';
 import 'package:user_manager/ui/screens/home/home.dart';
 import 'package:user_manager/ui/screens/user/user.dart';
 import 'package:user_manager/ui/screens/user_info/user_info.dart';
-enum Routes { home, config, user, userInfo }
+enum Routes { home, config, user, userInfo, calendar}
 
 class _Paths {
 
@@ -12,13 +13,15 @@ class _Paths {
   static const String user = '/home/user';
   static const String userInfo = '/home/user-info';
   static const String config = '/home/config';
+  static const String calendar = '/home/calendar';
   
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
     Routes.config: _Paths.config,
     Routes.user: _Paths.user,
-    Routes.userInfo : _Paths.userInfo
+    Routes.userInfo : _Paths.userInfo,
+    Routes.calendar : _Paths.calendar
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -37,7 +40,8 @@ class AppNavigator {
         return FadeRoute(page: UserInfo());
       case _Paths.config:
         return FadeRoute(page: ConfigScreen());
-
+      case _Paths.calendar : 
+        return FadeRoute(page: CalendarScreen());
       case _Paths.home:
       default:
         return FadeRoute(page: HomeScreen());
