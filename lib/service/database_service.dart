@@ -71,6 +71,9 @@ class DatabaseService {
                         },
                         "description": {
                             "rich_text": {}
+                        },
+                        "job_count" : {
+                          "number" : {}
                         }
                 }
         });

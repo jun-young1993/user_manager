@@ -33,7 +33,7 @@ class _UserAbout extends StatelessWidget {
       },
       child : Column(
         children : <Widget>[
-          _buildDescription(user.name),
+          _buildDescription(user.description),
           SizedBox(height: 30),
           _buildInfoContainer([
             _infoField("이름",user.name,isDark),

@@ -54,8 +54,18 @@ class UserService {
             name = titleResponse[0]['text']['content'];
         }
 
+        final List descriptionResponse = property['description']['rich_text'];
+        String description = "no description";
+        if(descriptionResponse.length != 0){
+          description = descriptionResponse[0]['text']['content'];
+        }
+
+        final int jobCount = property['job_count']['number'] ?? 0;
+
+
+
         String phoneNumber = property['phone_number']['phone_number'] ?? "-";   
-        final User user = User(id : id, name : name, phoneNumber: phoneNumber);
+        final User user = User(id : id, name : name, phoneNumber: phoneNumber, description: description, jobCount: jobCount);
         return user;
     }
 
@@ -77,11 +87,32 @@ class UserService {
               },
               "phone_number": {
                   "phone_number": data.phoneNumber
+              },
+              "color" : {
+                "color" : data.color
+              },
+              "description" : {
+                "description" : data.description
+              },
+              "disable" : {
+                "disable" : data.disable
+              },
+              "job_count" : {
+                "job_count" : data.jobCount
               }
           }
       });
       
-      return User(id: result['id'], name: data.name, phoneNumber: data.phoneNumber);
+      return User(
+          id: result['id'],
+          name: data.name,
+          phoneNumber: data.phoneNumber,
+          color : data.color,
+          description: data.description,
+          disable: data.disable,
+          jobCount: data.jobCount
+
+      );
     }
 
     
