@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:user_manager/domain/entities/user.dart';
+import 'package:user_manager/service/user_service.dart';
 import 'package:user_manager/states/user/user_event.dart';
 import 'package:user_manager/states/user/user_state.dart';
 import 'package:user_manager/data/repositories/user_repository.dart';
@@ -77,8 +78,9 @@ class UserBloc extends Bloc<UserEvent,UserState> {
           (users) => users.id == user.id,
         );
 
-        state.users[userIndex] = user;
- 
+        final update = await UserService().update(user);
+        state.users[userIndex] = update;
+        inspect(update);
         emit(state.copyWith(users: state.users));
       } on Exception catch (e) {
 

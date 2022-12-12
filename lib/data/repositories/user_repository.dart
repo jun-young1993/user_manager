@@ -26,4 +26,9 @@ class UserDefaultRepository extends UserRepository {
   Future<User> create(UserProperty data) async {
         return UserService().create(data);
   }
+
+  @override
+  Future<User> update(User data) async {
+    return UserService().update(data);
+  }
 }

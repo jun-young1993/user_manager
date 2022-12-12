@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:user_manager/configs/constants.dart';
 import 'package:user_manager/configs/statics/notion_database.dart';
@@ -71,6 +72,8 @@ class UserService {
 
 
     Future<User> create(UserProperty data) async {
+      print("user Property create");
+      inspect(data);
       final result = await client.pages.create({
           "parent": {
               "database_id": userDatabaseId
@@ -89,16 +92,28 @@ class UserService {
                   "phone_number": data.phoneNumber
               },
               "color" : {
-                "color" : data.color
+                "rich_text": [
+                      {
+                          "text": {
+                              "content": data.color
+                          }
+                      }
+                  ]
               },
               "description" : {
-                "description" : data.description
+                   "rich_text": [
+                      {
+                          "text": {
+                              "content": data.description
+                          }
+                      }
+                  ]
               },
               "disable" : {
-                "disable" : data.disable
+                "checkbox" : data.disable
               },
               "job_count" : {
-                "job_count" : data.jobCount
+                "number" : data.jobCount
               }
           }
       });
@@ -113,6 +128,54 @@ class UserService {
           jobCount: data.jobCount
 
       );
+    }
+
+    Future<User> update(User data) async {
+      await client.pages.update(data.id,{
+          "parent": {
+              "database_id": userDatabaseId
+          },
+          "properties": {
+              "name": {
+                  "rich_text": [
+                      {
+                          "text": {
+                              "content": data.name
+                          }
+                      }
+                  ]
+              },
+              "phone_number": {
+                  "phone_number": data.phoneNumber
+              },
+              "color" : {
+                 "rich_text": [
+                      {
+                          "text": {
+                              "content": data.color
+                          }
+                      }
+                  ]
+              },
+              "description" : {
+                "rich_text": [
+                      {
+                          "text": {
+                              "content": data.description
+                          }
+                      }
+                  ]
+              },
+              "disable" : {
+                "checkbox" : data.disable
+              },
+              "job_count" : {
+                "number" : data.jobCount
+              }
+          }
+      });
+  
+      return data;
     }
 
     

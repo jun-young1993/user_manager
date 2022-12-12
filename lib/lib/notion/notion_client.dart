@@ -82,6 +82,16 @@ class NotionPagesClient extends BaseClient{
         return notionResponse(res);
   }
 
+  Future update (String id, page) async {
+    http.Response res = 
+      await http.patch(Uri.https(host,'$v/$path/$id'),
+        body : jsonEncode(page),
+        headers : defaultHeader()
+      );
+
+      return notionResponse(res);
+  }
+
 }
 
 class NotionClient {
