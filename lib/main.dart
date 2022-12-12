@@ -20,9 +20,6 @@ void main() async {
           BlocProvider<UserBloc>(
             create: (context) => UserBloc(context.read<UserRepository>()),
           ),
-          BlocProvider<UserBloc>(
-            create: (context) => UserBloc(context.read<UserRepository>()),
-          ),
           BlocProvider<ThemeCubit>(
             create: (context) => ThemeCubit(),
           )

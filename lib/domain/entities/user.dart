@@ -40,6 +40,13 @@ class User{
   final bool disable;
   final int jobCount;
 
+  User plusJobCount(){
+    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount+1);
+  }
+  User minusJobCount(){
+    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount-1);
+  }
+
   // const User({
   //   required this.id,
   //   required this.name,

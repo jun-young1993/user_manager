@@ -17,6 +17,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
       );
       on<UserSelectChanged>(_onSelectChanged);
       on<UserCreated>(_onCreated);
+      on<CurrentUserUpdate>(_onUpdated);
     }
 
     void _onLoadStarted(UserLoadStarted event, Emitter<UserState> emit) async {
@@ -59,13 +60,28 @@ class UserBloc extends Bloc<UserEvent,UserState> {
 
         final UserProperty userProperty = event.user;
         final user = await _userRepository.create(userProperty);
-        
+    
         
         state.users.insert(0,user);
         emit(state.copyWith(users: state.users));
         
       } on Exception catch (e) {
           
+      }
+    }
+
+    void _onUpdated(CurrentUserUpdate event, Emitter<UserState> emit ) async {
+      try{
+        final User user = event.user;
+        final userIndex = state.users.indexWhere(
+          (users) => users.id == user.id,
+        );
+
+        state.users[userIndex] = user;
+ 
+        emit(state.copyWith(users: state.users));
+      } on Exception catch (e) {
+
       }
     }
 

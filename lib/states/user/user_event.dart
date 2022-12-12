@@ -26,3 +26,8 @@ class UserCreated extends UserEvent {
 
 
 }
+
+class CurrentUserUpdate extends UserEvent {
+  final User user;
+  const CurrentUserUpdate(this.user);
+}
