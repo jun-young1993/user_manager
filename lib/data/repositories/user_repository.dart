@@ -6,6 +6,7 @@ abstract class UserRepository {
   Future<List<User>> get();
   Future<User> find(String id);
   Future<User> create(UserProperty data);
+  Future<User> update(User data);
 }
 
 class UserDefaultRepository extends UserRepository {

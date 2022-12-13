@@ -39,6 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _asyncMethod() async {
+    // await storage.delete(key: 'database');
+      
      databaseInfos = await storage.read(key : 'database');
 
     
@@ -46,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       inspect(jsonDecode(databaseInfos));
       NotionDatabase.userId = jsonDecode(databaseInfos)["userId"];
       NotionDatabase.schemaId = jsonDecode(databaseInfos)["schemaId"];
+      NotionDatabase.scheduleId =  jsonDecode(databaseInfos)["scheduleId"];
       _moveHome();
     }
 

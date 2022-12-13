@@ -43,19 +43,23 @@ class Database{
 class DatabaseId {
   const DatabaseId({
     required this.schemaId,
-    required this.userId
+    required this.userId,
+    required this.scheduleId
   });
   
   final String schemaId;
   final String userId;
+  final String scheduleId;
 
   DatabaseId.fromJson(Map<String, dynamic> json)
       : schemaId = json['schemaId'],
-        userId = json['userId'];
+        userId = json['userId'],
+        scheduleId = json['scheduleId'];
 
   Map<String, dynamic> toJson() =>
     {
       'schemaId': schemaId,
       'userId': userId,
+      'scheduleId' : scheduleId
     };
 }

@@ -31,15 +31,20 @@ class _UserInfoContainerChildren {
   const _UserInfoContainerChildren({
     this.label = "",
     this.text = "",
-    this.children
+    this.children,
+    this.type = "text",
+    this.child
   });
+  final String type ;
   final String? label ;
   final String? text;
   final List<Widget>? children;
+  final Widget ?child;
 }
 class _UserInfoContainer extends StatelessWidget {
   final List<_UserInfoContainerChildren> children;
   final bool isDark;
+  
 
   const _UserInfoContainer({
     required this.children,
@@ -68,18 +73,8 @@ class _UserInfoContainer extends StatelessWidget {
                 children : <Widget>[
                   _Label(row.label.toString(), this.isDark),
                     SizedBox(height: 11),
-                  row.children == null
-                  ? Text(
-                      '${row.text}',
-                      style: TextStyle(
-                        height: 0.8,
-                        ),
-                    )
-                  : Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children : [
-                      ...row.children!.map((child) => Expanded(child: child)).toList()]
-                    )
+                    _buildByType(row)
+              
                 ]
               )
             )
@@ -96,4 +91,39 @@ class _UserInfoContainer extends StatelessWidget {
         ),
     );
   }
+
+  Widget _buildByType(_UserInfoContainerChildren row){
+    switch (row.type) {
+      case 'text' :
+        return _buildTextType(row);
+      case 'row' :
+        return _buildRowType(row);
+      case 'widget' :
+        return _buildWidgetType(row);
+      default : 
+        return Container();
+    }
+  }
+
+  Widget _buildWidgetType(_UserInfoContainerChildren row) {
+    return row.child ?? Container();
+  }
+
+  Widget _buildTextType(_UserInfoContainerChildren row){
+    return Text(
+          '${row.text}',
+          style: TextStyle(
+            height: 0.8,
+            ),
+      );
+  }
+
+  Widget _buildRowType(_UserInfoContainerChildren row){
+    return   Row(
+      mainAxisSize: MainAxisSize.max,
+      children : [
+      ...row.children!.map((child) => Expanded(child: child)).toList()]
+    );
+  }
 }
+

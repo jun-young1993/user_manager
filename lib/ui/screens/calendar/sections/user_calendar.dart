@@ -47,7 +47,15 @@ List<Meeting> _getDataSource() {
   DateTime(today.year, today.month, today.day, 9, 0, 0);
   final DateTime endTime = startTime.add(const Duration(hours: 2));
   meetings.add(Meeting(
-      '', startTime, endTime, const Color(0xFF0F8644), false));
+      'test1', startTime, endTime, const Color(0xFF0F8644), false));
+  meetings.add(Meeting(
+  'test2', startTime, endTime, Color.fromARGB(170, 224, 6, 72), false));
+  meetings.add(Meeting(
+  'test3', startTime, endTime, Color.fromARGB(170, 224, 6, 72), false));
+  meetings.add(Meeting(
+  'test4', startTime, endTime, Color.fromARGB(170, 224, 6, 72), false));
+  meetings.add(Meeting(
+  'test5', startTime, endTime, Color.fromARGB(170, 224, 6, 72), false));
   return meetings;
 }
 

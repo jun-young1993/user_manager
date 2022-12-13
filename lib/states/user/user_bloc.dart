@@ -78,7 +78,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
           (users) => users.id == user.id,
         );
 
-        final update = await UserService().update(user);
+        final update = await _userRepository.update(user);
         state.users[userIndex] = update;
         inspect(update);
         emit(state.copyWith(users: state.users));

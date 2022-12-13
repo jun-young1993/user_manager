@@ -18,6 +18,8 @@ class _UserSchedule extends StatefulWidget{
   State<StatefulWidget> createState() => _UserScheduleState();
 }
 
+
+
 class _UserScheduleState extends State<_UserSchedule> {
   
   
@@ -47,44 +49,58 @@ class _UserScheduleState extends State<_UserSchedule> {
         },
         child : Column(
           children : <Widget>[
-              _UserInfoContainer(
-                  children: [
-                    _UserInfoContainerChildren(label: "잔여 횟수", text: user.jobCount.toString()),
-                    _UserInfoContainerChildren( children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(1000.0),
-                        onTap : () {
-                              print("plus +1");
-                              
-                              userBloc.add(CurrentUserUpdate(user.plusJobCount()));
-                        },
-                        child: Icon(
-                            Icons.arrow_circle_up_sharp,
-                            size: 30.0,
-                            color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(width: 30,),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(1000.0),
-                        onTap : () {
-                              print("plus +1");
-                              if(user.jobCount != 0){
-                                userBloc.add(CurrentUserUpdate(user.minusJobCount()));
-                              }
-                              
-                        },
-                        child: Icon(
-                            Icons.arrow_circle_down_sharp,
-                            size: 30.0,
-                            color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(width: 10,),
-                    ]),
-                  ],
-                  isDark: isDark,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Theme.of(context).backgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.12),
+                    offset: Offset(0, 8),
+                    blurRadius: 23,
+                  )
+                ],
+              ),
+              child : Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _Label("일정추가",isDark),
+                      ],
+                    )
+                  ),
+                  Expanded(
+                    child : Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: (){
+                            
+                            showDialog(
+                              context : context,
+                              builder: (BuildContext context){
+                                return AlertDialog(
+                                  content : Stack(
+                                    children : <Widget>[
+                                      DatePickerStatefulWidget(restorationId:'main')
+                                    ]
+                                  )
+                                );
+                              },
+                            );
+                          }, 
+                          icon: Icon(Icons.add)
+                        )
+                      ],
+                    )
+                  )
+                ],
               )
+            )
           ]
         )
       );
@@ -93,5 +109,26 @@ class _UserScheduleState extends State<_UserSchedule> {
   }
 
 
- 
+  void ShowDatePickerPop(context) {
+    Future<DateTime?> selectedDate = showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), //초기값
+      firstDate: DateTime(2020), //시작일
+      lastDate: DateTime(2022), //마지막일
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark(), //다크 테마
+          child: child!,
+        );
+      },
+    );
+
+    selectedDate.then((dateTime) {
+      // Fluttertoast.showToast(
+      //   msg: dateTime.toString(),
+      //   toastLength: Toast.LENGTH_LONG,
+      //   //gravity: ToastGravity.CENTER,  //위치(default 는 아래)
+      // );
+    });
+  }
 }

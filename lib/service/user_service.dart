@@ -36,9 +36,19 @@ class UserService {
         if(titleResponse.length != 0){
             name = titleResponse[0]['text']['content'];
         }
+       final List descriptionResponse = property['description']['rich_text'];
+        String description = "no description";
+        if(descriptionResponse.length != 0){
+          description = descriptionResponse[0]['text']['content'];
+        }
+        print("user job count ${property['job_count']['number']}");
+        final int jobCount = property['job_count']['number'] ?? 0;
 
+
+
+        
         String phoneNumber = property['phone_number']['phone_number'] ?? "-";   
-        users.add(User(id : id, name : name, phoneNumber: phoneNumber));
+        users.add(User(id : id, name : name, phoneNumber: phoneNumber, description: description, jobCount: jobCount));
       }
 
       return users;
@@ -60,7 +70,7 @@ class UserService {
         if(descriptionResponse.length != 0){
           description = descriptionResponse[0]['text']['content'];
         }
-
+        print("user job count ${property['job_count']['number']}");
         final int jobCount = property['job_count']['number'] ?? 0;
 
 

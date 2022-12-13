@@ -36,6 +36,8 @@ class DatabaseService {
       return Database(id: result['id'], name: data.name, phoneNumber: data.phoneNumber);
     }
 
+    
+    
     Future<DatabaseId> create(DatabaseProperty data) async {
         final result  = await createSchema(data);
 
@@ -78,7 +80,37 @@ class DatabaseService {
                 }
         });
 
-        return DatabaseId(schemaId: result.id, userId : user['id']);
+        final schedule = await client.databases.create({
+            "parent": {
+                "type" : "page_id",
+                "page_id": result.id
+            },
+                "title": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "Schedule",
+                        "link": null
+                    }
+                }
+            ],
+            "properties": {
+                        "title" : {
+                            "title" : {}
+                        },
+                        "user_id": {
+                            "rich_text": {}
+                        },
+                        "date": {
+                            "date": {}
+                        },
+                        "description": {
+                            "rich_text": {}
+                        }
+                }
+        });
+
+        return DatabaseId(schemaId: result.id, userId : user['id'],scheduleId : schedule['id']);
     }
     
 
