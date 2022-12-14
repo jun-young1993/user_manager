@@ -1,13 +1,19 @@
 import 'package:user_manager/domain/entities/schedule.dart';
+import 'package:user_manager/domain/entities/user.dart';
+
 
 abstract class ScheduleEvent {
   const ScheduleEvent();
 }
 
-class UserLoadStarted extends ScheduleEvent{
-  final bool loadAll;
 
-  const UserLoadStarted({this.loadAll = false});
+class ScheduleLoadStarted extends ScheduleEvent {
+  final User user;
+  final bool loadAll;
+  const ScheduleLoadStarted({required this.user, this.loadAll = false});
 }
 
-class UserLoadMoreStarted extends ScheduleEvent{}
+class ScheduleCreated extends ScheduleEvent {
+  final Schedule schedule;
+  const ScheduleCreated(this.schedule);
+}
