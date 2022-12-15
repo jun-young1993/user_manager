@@ -1,11 +1,16 @@
 import 'package:user_manager/domain/entities/schedule.dart';
+import 'package:user_manager/service/schedule_service.dart';
 
 abstract class ScheduleRepository {
-  Future<Schedule> create(Schedule schedule);
+  Future<SchedulePrimary> create(Schedule schedule);
+  Future<List<SchedulePrimary>> index(query);
 }
 
 class ScheduleDefaultRepository extends ScheduleRepository {
-  Future<Schedule> create (Schedule schedule) async {
-    return Future<Schedule>.delayed(Duration(seconds: 2), () => schedule);
+  Future<SchedulePrimary> create (Schedule schedule) async {
+    return ScheduleService().create(schedule);
+  }
+  Future<List<SchedulePrimary>> index(query) async {
+    return ScheduleService().index(query);
   }
 }

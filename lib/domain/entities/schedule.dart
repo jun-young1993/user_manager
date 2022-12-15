@@ -15,6 +15,22 @@ class Schedule {
   final String eventName;
   final DateTime from;
   final DateTime to;
-  final Color background;
+  final Color? background;
   final bool isAllDay;
 }
+
+class SchedulePrimary {
+  const SchedulePrimary({
+    required this.id,
+    required this.schedule
+  });
+
+  final String id;
+  final Schedule schedule;
+
+}
+// class Schedule {
+//   const Schedule({
+
+//   })
+// }

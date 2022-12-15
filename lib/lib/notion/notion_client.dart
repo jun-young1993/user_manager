@@ -36,9 +36,10 @@ class NotionDatabasesClient extends BaseClient{
   NotionDatabasesClient() : super();
 
 
-  Future query(String id) async {
+  Future query(String id, {query}) async {
     http.Response res = 
         await http.post(Uri.https(host,'/$v/$path/$id/query'),
+          body : jsonEncode(query ?? {}),
           headers: defaultHeader()
         );
 

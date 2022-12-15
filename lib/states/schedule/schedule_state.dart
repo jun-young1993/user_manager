@@ -11,13 +11,13 @@ enum ScheduleStateStatus {
 }
 class ScheduleState {
     final ScheduleStateStatus status;
-    final List<Schedule> schedules;
+    final List<SchedulePrimary> schedules;
     final int selectedScheduleIndex;
     final int page;
     final Exception? error;
     final bool canLoadMore;
 
-    Schedule get selectedSchedule => schedules[selectedScheduleIndex];
+    SchedulePrimary get selectedSchedule => schedules[selectedScheduleIndex];
 
     const ScheduleState._({
       this.status = ScheduleStateStatus.initial,   
@@ -37,7 +37,7 @@ class ScheduleState {
       );
     }
 
-    ScheduleState asLoadSuccess(List<Schedule> schedules, {bool canLoadMore = true}) {
+    ScheduleState asLoadSuccess(List<SchedulePrimary> schedules, {bool canLoadMore = true}) {
       return copyWith(
         status: ScheduleStateStatus.loadSuccess,
         schedules: schedules,
@@ -56,7 +56,7 @@ class ScheduleState {
 
     ScheduleState copyWith({
       ScheduleStateStatus? status,
-      List<Schedule>? schedules,
+      List<SchedulePrimary>? schedules,
       int? selectedScheduleIndex,
       int? page,
       bool? canLoadMore,

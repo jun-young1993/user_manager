@@ -49,66 +49,23 @@ class _UserScheduleState extends State<_UserSchedule> {
               builder: (context, child) {
                 final scrollable = slideController.value.floor() == 1;
 
-                return SingleChildScrollView(
-                        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 27),
-                        physics: scrollable ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
-                        child: child,
-                ); 
+                return 
+                Stack(children: [
+
+                  _buildTopMenu(isDark),
+                  Container(
+                    margin: const EdgeInsets.only(top: 33),
+                    padding : const EdgeInsets.all(5),
+                    child : SingleChildScrollView(
+                              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 5),
+                              physics: scrollable ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
+                              child: child,
+                            )
+                  )
+                ]);
               },
               child : Column(
                 children : <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).backgroundColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.12),
-                          offset: Offset(0, 8),
-                          blurRadius: 23,
-                        )
-                      ],
-                    ),
-                    child : Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _Label("일정추가",isDark),
-                            ],
-                          )
-                        ),
-                        Expanded(
-                          child : Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: (){
-                                  final DateTime today = DateTime.now();
-                                  final DateTime startTime =
-                                  DateTime(today.year, today.month, today.day, 9, 0, 0);
-                                  final DateTime endTime = startTime.add(const Duration(hours: 2));
-                                  final Schedule schedule = Schedule(
-                                    user:user,
-                                    eventName:"no event",
-                                    from : startTime,
-                                    to :endTime,
-                                    background : Color(0xFF0F8644),
-                                  );
-                                  scheduleBloc.add(ScheduleCreated(schedule));
-                                }, 
-                                icon: Icon(Icons.add)
-                              )
-                            ],
-                          )
-                        )
-                      ],
-                    )
-                  ),
-                  SizedBox(height: 10,),
                   Container(
                     child : ScheduleStateStatusSelector((status){
                       print("schedule state status ${status} ${ScheduleStateStatus.loading}");
@@ -140,7 +97,7 @@ class _UserScheduleState extends State<_UserSchedule> {
     );
   }
     
-    Widget _buildGrid(isDark) {
+  Widget _buildGrid(isDark) {
     
       return SchedulesSelector((schedules) {
         // print("schedules");
@@ -174,11 +131,11 @@ class _UserScheduleState extends State<_UserSchedule> {
                           child : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _Label(schedule.eventName,isDark),
+                              _Label(schedule.schedule.eventName,isDark),
                               SizedBox(height: 10,),
-                              _Label("${schedule.from.year}-${schedule.from.month}-${schedule.from.day}", isDark),
+                              _Label("${schedule.schedule.from.year}-${schedule.schedule.from.month}-${schedule.schedule.from.day}", isDark),
                               SizedBox(height: 10,),
-                              _Label("${schedule.from.hour}:${schedule.from.minute} ~ ${schedule.to.hour}:${schedule.to.minute}",isDark)
+                              _Label("${schedule.schedule.from.hour}:${schedule.schedule.from.minute} ~ ${schedule.schedule.to.hour}:${schedule.schedule.to.minute}",isDark)
                               // _Label(schedule.user.name,isDark)
                             ],
                           )
@@ -246,4 +203,68 @@ class _UserScheduleState extends State<_UserSchedule> {
       });
   }
  
+
+  Widget _buildTopMenu(isDark){
+    return Column(
+                children : <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).backgroundColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.12),
+                          offset: Offset(0, 8),
+                          blurRadius: 23,
+                        )
+                      ],
+                    ),
+                    child : Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _Label("일정추가",isDark),
+                            ],
+                          )
+                        ),
+                        Expanded(
+                          child : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: (){
+                                  final DateTime today = DateTime.now();
+                                  final DateTime startTime =
+                                  DateTime(today.year, today.month, today.day, today.hour, today.minute, today.second);
+                                  final DateTime endTime = startTime.add(const Duration(hours: 2));
+                                  final Schedule schedule = Schedule(
+                                    user:user,
+                                    eventName:"no event",
+                                    from : startTime,
+                                    to :endTime,
+                                    background : Color(int.parse(user.color)),
+                                  );
+                                  scheduleBloc.add(ScheduleCreated(schedule));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text("추가되었습니다."),
+                                    )
+                                  );
+                                }, 
+                                icon: Icon(Icons.add)
+                              )
+                            ],
+                          )
+                        )
+                      ],
+                    )
+                  )
+                ]
+    );
+                  
+  }
 }

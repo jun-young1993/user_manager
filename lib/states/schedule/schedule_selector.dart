@@ -20,8 +20,8 @@ class ScheduleStateStatusSelector extends ScheduleSelector<ScheduleStateStatus> 
   );
 }
 
-class SchedulesSelector extends ScheduleSelector<List<Schedule>?> {
-  SchedulesSelector(Widget Function(List<Schedule>?) builder) 
+class SchedulesSelector extends ScheduleSelector<List<SchedulePrimary>?> {
+  SchedulesSelector(Widget Function(List<SchedulePrimary>?) builder) 
     : super(
       selector : (state) => state.schedules,
        builder : builder

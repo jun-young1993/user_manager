@@ -29,6 +29,7 @@ part 'sections/user_overall_info.dart';
 part 'sections/user_info_card.dart';
 part 'sections/user_info_card_about.dart';
 part 'sections/user_info_card_schedule.dart';
+
 part 'sections/user_card_widget.dart';
 part 'sections/user_info_card_config.dart';
 class UserInfo extends StatefulWidget {

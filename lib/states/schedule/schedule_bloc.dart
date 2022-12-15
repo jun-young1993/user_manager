@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:user_manager/data/repositories/schedule_repository.dart';
 import 'package:user_manager/domain/entities/schedule.dart';
+import 'package:user_manager/service/schedule_service.dart';
 import 'package:user_manager/states/schedule/schedule_event.dart';
 import 'package:user_manager/states/schedule/schedule_state.dart';
 class ScheduleBloc extends Bloc<ScheduleEvent,ScheduleState> {
@@ -20,7 +21,18 @@ class ScheduleBloc extends Bloc<ScheduleEvent,ScheduleState> {
   void _onLoadStarted(ScheduleLoadStarted event, Emitter<ScheduleState> emit) async {
     try{
       emit(state.asloading());
-      emit(state.asLoadSuccess(state.schedules));
+      final List<SchedulePrimary> schedules = await _scheduleRepository.index({
+        "filter" : {
+          "property" : "user_id",
+          "rich_text" : {
+            "equals" : event.user.id
+          }
+        }
+      });
+      print("_onLoadStarted");
+      inspect(schedules);
+      emit(state.asLoadSuccess(schedules, canLoadMore: false));
+
     } on Exception catch (e) {
       emit(state.asLoadFailure(e));
     }
@@ -30,18 +42,18 @@ class ScheduleBloc extends Bloc<ScheduleEvent,ScheduleState> {
     try{
       
       final  Schedule schedule = event.schedule;
-      
-      // final Schedule create = await _scheduleRepository.create(schedule);
+      emit(state.asloading());
+      final SchedulePrimary create = await _scheduleRepository.create(schedule);
       
 
       
       
-      final List<Schedule> initSchedules = state.schedules.toList();
-      initSchedules.insert(0,schedule);
+      final List<SchedulePrimary> initSchedules = state.schedules.toList();
+      initSchedules.insert(0,create);
       
       inspect(initSchedules);
       // state.schedules.insert(0,schedule);
-      
+      emit(state.asLoadSuccess(state.schedules));
       emit(state.copyWith(schedules: initSchedules));
       
     } on Exception catch (e){
