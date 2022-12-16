@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_manager/data/repositories/schedule_repository.dart';
 import 'package:user_manager/data/repositories/user_repository.dart';
+import 'package:user_manager/states/calendar/calendar_bloc.dart';
 import 'package:user_manager/states/schedule/schedule_bloc.dart';
 
 import 'package:user_manager/states/user/user_bloc.dart';
@@ -25,6 +26,9 @@ void main() async {
           ),
           BlocProvider<ScheduleBloc>(
             create: (context) => ScheduleBloc(context.read<ScheduleRepository>()),
+          ),
+          BlocProvider<CalendarBloc>(
+            create: (context) => CalendarBloc(context.read<ScheduleRepository>()),
           ),
           BlocProvider<ThemeCubit>(
             create: (context) => ThemeCubit(),
