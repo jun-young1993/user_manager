@@ -84,7 +84,7 @@ class ScheduleDataSource extends CalendarDataSource {
   @override
   String getSubject(int index) {
     final SchedulePrimary schedule = appointments![index];
-    return schedule.schedule.eventName;
+    return "${schedule.schedule.user.name}\r\n${schedule.schedule.eventName}\r\n";
   }
 
   @override

@@ -37,10 +37,10 @@ class _UserInfoCardState extends State<_UserInfoCard> {
                 label : "일정 관리",
                 child : _UserSchedule(user)
             ),
-            MainTabData(
-                label : "회원 설정",
-                child : _UserConfig()
-            )
+            // MainTabData(
+            //     label : "회원 설정",
+            //     child : _UserConfig()
+            // )
           ]
         );
       }),

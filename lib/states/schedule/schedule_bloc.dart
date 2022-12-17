@@ -4,12 +4,17 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:user_manager/data/repositories/schedule_repository.dart';
+import 'package:user_manager/data/repositories/user_repository.dart';
 import 'package:user_manager/domain/entities/schedule.dart';
+import 'package:user_manager/domain/entities/user.dart';
 import 'package:user_manager/service/schedule_service.dart';
 import 'package:user_manager/states/schedule/schedule_event.dart';
 import 'package:user_manager/states/schedule/schedule_state.dart';
+import 'package:user_manager/states/user/user_bloc.dart';
+import 'package:user_manager/states/user/user_event.dart';
 class ScheduleBloc extends Bloc<ScheduleEvent,ScheduleState> {
   final ScheduleRepository _scheduleRepository;
+
   ScheduleBloc(this._scheduleRepository) : super(ScheduleState.initial()){
     on<ScheduleLoadStarted>(
            _onLoadStarted, 
@@ -44,13 +49,11 @@ class ScheduleBloc extends Bloc<ScheduleEvent,ScheduleState> {
       final  Schedule schedule = event.schedule;
       emit(state.asloading());
       final SchedulePrimary create = await _scheduleRepository.create(schedule);
-      
 
-      
       
       final List<SchedulePrimary> initSchedules = state.schedules.toList();
       initSchedules.insert(0,create);
-      
+      // initSchedules.map((e) => e.setUser(user));
       inspect(initSchedules);
       // state.schedules.insert(0,schedule);
       emit(state.asLoadSuccess(state.schedules));

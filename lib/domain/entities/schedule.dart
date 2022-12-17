@@ -17,6 +17,10 @@ class Schedule {
   final DateTime to;
   final Color? background;
   final bool isAllDay;
+
+  setUser(User user){
+    return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
+  }
 }
 
 class SchedulePrimary {
@@ -27,7 +31,9 @@ class SchedulePrimary {
 
   final String id;
   final Schedule schedule;
-
+  setUser(User user){
+    return SchedulePrimary(id: id, schedule: schedule.setUser(user));
+  }
 }
 // class Schedule {
 //   const Schedule({

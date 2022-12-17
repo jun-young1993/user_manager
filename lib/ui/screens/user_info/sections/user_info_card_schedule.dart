@@ -27,6 +27,7 @@ class _UserScheduleState extends State<_UserSchedule> {
   
     // UserBloc get userBloc => context.read<UserBloc>();
   ScheduleBloc get scheduleBloc => context.read<ScheduleBloc>();
+  UserBloc get userBloc => context.read<UserBloc>();
   // UserBloc get userBloc => context.read<UserBloc>();
   @override
   void initState(){
@@ -237,23 +238,35 @@ class _UserScheduleState extends State<_UserSchedule> {
                             children: [
                               IconButton(
                                 onPressed: (){
-                                  final DateTime today = DateTime.now();
-                                  final DateTime startTime =
-                                  DateTime(today.year, today.month, today.day, today.hour, today.minute, today.second);
-                                  final DateTime endTime = startTime.add(const Duration(hours: 2));
-                                  final Schedule schedule = Schedule(
-                                    user:user,
-                                    eventName:"no event",
-                                    from : startTime,
-                                    to :endTime,
-                                    background : Color(int.parse(user.color)),
-                                  );
-                                  scheduleBloc.add(ScheduleCreated(schedule));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text("추가되었습니다."),
-                                    )
-                                  );
+
+                                  if(user.jobCount == 0){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: Colors.redAccent,
+                                          content: Text("일정추가 잔여횟수가 0 입니다."),
+                                        )
+                                    );
+                                  }else{
+                                    final DateTime today = DateTime.now();
+                                    final DateTime startTime =
+                                    DateTime(today.year, today.month, today.day, today.hour, today.minute, today.second);
+                                    final DateTime endTime = startTime.add(const Duration(hours: 2));
+                                    final Schedule schedule = Schedule(
+                                      user:user,
+                                      eventName:"no event",
+                                      from : startTime,
+                                      to :endTime,
+                                      background : Color(int.parse(user.color)),
+                                    );
+                                    scheduleBloc.add(ScheduleCreated(schedule));
+                                    userBloc.add(CurrentUserUpdate(user.minusJobCount()));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("추가되었습니다."),
+                                        )
+                                    );
+                                  };
+
                                 }, 
                                 icon: Icon(Icons.add)
                               )
