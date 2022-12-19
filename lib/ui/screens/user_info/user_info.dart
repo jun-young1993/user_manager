@@ -22,6 +22,7 @@ import 'package:user_manager/configs/images.dart';
 import 'package:user_manager/configs/colors.dart';
 import 'package:user_manager/domain/entities/user.dart';
 import 'package:user_manager/states/user/user_bloc.dart';
+import 'package:user_manager/ui/widgets/user_form.dart';
 
 
 part 'sections/background_decoration.dart';

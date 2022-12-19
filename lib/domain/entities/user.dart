@@ -17,11 +17,14 @@ class UserProperty {
   final bool disable;
   final int jobCount;
 
+  User getUser(String id){
+    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount);
+  }
 
 }
 
 class User{
-  
+
   const User({
     required this.id,
     required this.name,
@@ -31,7 +34,7 @@ class User{
     this.disable = false,
     this.jobCount = 0
   });
-  
+
   final String id;
   final String name;
   final String phoneNumber;
@@ -46,6 +49,9 @@ class User{
   User minusJobCount(){
     return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount-1);
   }
+
+
+
 
 
 
