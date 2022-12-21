@@ -14,6 +14,7 @@ import 'package:user_manager/states/user/user_event.dart';
 import 'package:user_manager/states/user/user_selector.dart';
 import 'package:user_manager/ui/screens/user_info/state_provider.dart';
 import 'package:user_manager/ui/widgets/animated_fade.dart';
+import 'package:user_manager/ui/widgets/form/schedule_form.dart';
 import 'package:user_manager/ui/widgets/main_app_bar.dart';
 import 'package:user_manager/ui/widgets/auto_slideup_panel.dart';
 import 'package:user_manager/ui/widgets/main_tab_view.dart';
@@ -22,7 +23,7 @@ import 'package:user_manager/configs/images.dart';
 import 'package:user_manager/configs/colors.dart';
 import 'package:user_manager/domain/entities/user.dart';
 import 'package:user_manager/states/user/user_bloc.dart';
-import 'package:user_manager/ui/widgets/user_form.dart';
+import 'package:user_manager/ui/widgets/form/user_form.dart';
 
 
 part 'sections/background_decoration.dart';

@@ -9,7 +9,7 @@ import 'package:user_manager/ui/widgets/main_app_bar.dart';
 import 'package:user_manager/ui/widgets/user_card.dart';
 import 'package:user_manager/ui/widgets/fab.dart';
 import 'package:user_manager/ui/widgets/animated_overlay.dart';
-import 'package:user_manager/ui/widgets/user_form.dart';
+import 'package:user_manager/ui/widgets/form/user_form.dart';
 import 'package:user_manager/states/user/user_bloc.dart';
 import 'package:user_manager/states/user/user_event.dart';
 import 'package:user_manager/states/user/user_selector.dart';

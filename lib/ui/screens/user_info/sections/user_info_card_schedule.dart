@@ -101,12 +101,6 @@ class _UserScheduleState extends State<_UserSchedule> {
   Widget _buildGrid(isDark) {
     
       return SchedulesSelector((schedules) {
-        // print("schedules");
-        // print(schedules);
-        
-        // schedules!.map((schedule) {
-        //   scheduleConrainer.add(Container());
-        // });
         return Column(
           children: [
             ...schedules!.map((schedule) => 
@@ -150,57 +144,6 @@ class _UserScheduleState extends State<_UserSchedule> {
             )
           ],
         );
-        // return Container(
-        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        //         decoration: BoxDecoration(
-        //           borderRadius: BorderRadius.circular(12),
-        //           color: Theme.of(context).backgroundColor,
-        //           boxShadow: [
-        //             BoxShadow(
-        //               color: Colors.black.withOpacity(0.12),
-        //               offset: Offset(0, 8),
-        //               blurRadius: 23,
-        //             )
-        //           ],
-        //         ),
-        //         child : Row(
-        //           mainAxisSize: MainAxisSize.max,
-        //           children: [
-        //             Expanded(
-        //               child : Column(
-        //                 crossAxisAlignment: CrossAxisAlignment.start,
-        //                 children: [
-        //                   _Label("일정추가",isDark),
-        //                 ],
-        //               )
-        //             ),
-        //             Expanded(
-        //               child : Column(
-        //                 crossAxisAlignment: CrossAxisAlignment.end,
-        //                 children: [
-        //                   IconButton(
-        //                     onPressed: (){
-        //                       final DateTime today = DateTime.now();
-        //                       final DateTime startTime =
-        //                       DateTime(today.year, today.month, today.day, 9, 0, 0);
-        //                       final DateTime endTime = startTime.add(const Duration(hours: 2));
-        //                       final Schedule schedule = Schedule(
-        //                         user:user,
-        //                         eventName:"no event",
-        //                         from : startTime,
-        //                         to :endTime,
-        //                         background : Color(0xFF0F8644),
-        //                       );
-        //                       scheduleBloc.add(ScheduleCreated(schedule));
-        //                     }, 
-        //                     icon: Icon(Icons.add)
-        //                   )
-        //                 ],
-        //               )
-        //             )
-        //           ],
-        //         )
-        // );
       });
   }
  
@@ -224,6 +167,26 @@ class _UserScheduleState extends State<_UserSchedule> {
                     child : Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        IconButton(
+                            onPressed: ()=>{
+                              showDialog(
+                                context : context,
+                                builder: (BuildContext context){
+                                  final DateTime currentDateTime = DateTime.now();
+
+                                  return ScheduleForm(
+                                    schedule : Schedule(
+                                        user: user,
+                                        from: currentDateTime,
+                                        to : currentDateTime.add(Duration(hours: 2)),
+                                        background: Color(int.parse(user.color))
+                                    )
+                                  );
+                                }
+                              )
+                            },
+                            icon: Icon(Icons.add)
+                        ),
                         Expanded(
                           child : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

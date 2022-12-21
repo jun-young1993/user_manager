@@ -18,9 +18,17 @@ class Schedule {
   final Color? background;
   final bool isAllDay;
 
-  setUser(User user){
+  Schedule setUser(User user){
     return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
   }
+  Schedule setFrom(DateTime from){
+    return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
+  }
+  Schedule setTo(DateTime to){
+    return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
+  }
+
+
 }
 
 class SchedulePrimary {
