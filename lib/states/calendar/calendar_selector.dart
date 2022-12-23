@@ -12,6 +12,13 @@ class CalendarSelector<T> extends BlocSelector<CalendarBloc, CalendarState, T> {
             builder : (_, value) => builder(value));
 }
 
+class CalendarStateStatusSelector extends CalendarSelector<CalendarStateStatus> {
+  CalendarStateStatusSelector(Widget Function(CalendarStateStatus) builder)
+      : super(
+      selector: (state) => state.status,
+      builder: builder
+  );
+}
 
 class CalendarsSelector extends CalendarSelector<List<SchedulePrimary>?> {
   CalendarsSelector(Widget Function(List<SchedulePrimary>?) builder) :
@@ -19,4 +26,12 @@ class CalendarsSelector extends CalendarSelector<List<SchedulePrimary>?> {
       selector : (state) => state.schedules,
       builder: builder
     );
+}
+
+class CalendarStateSelector extends CalendarSelector<CalendarState> {
+  CalendarStateSelector(Widget Function(CalendarState) builder)
+      : super(
+      selector: (state) => state,
+      builder: builder
+  );
 }

@@ -12,6 +12,7 @@ class _UserCalendarState extends State<_UserCalendar> {
 
   CalendarBloc get calendarBloc => context.read<CalendarBloc>();
   //  context.read(<CalendarBloc>);
+  DateTime initDate = DateTime.now();
   @override
   void initState(){
 
@@ -21,9 +22,9 @@ class _UserCalendarState extends State<_UserCalendar> {
 
   @override
   Widget build(BuildContext context){
-      
-    
-  
+
+
+    // calendarBloc.add(CalendarLoadStarted(from: DateTime.now(),to:DateTime.now()));
     return NestedScrollView(
         key : _scrollKey,
         headerSliverBuilder: (_, __) => [
@@ -32,13 +33,47 @@ class _UserCalendarState extends State<_UserCalendar> {
               context: context,
             ),
         ],
-        body :CalendarsSelector((schedules){
-          print("calendar Selector");
-          inspect(schedules);
-         return SfCalendar(
+        body : CalendarStateSelector((state) {
+          print("calendar state status selector ${state.status}");
+          switch(state.status){
+            case CalendarStateStatus.initial:
+              return _buildCalendar(state.loadFrom);
+            case CalendarStateStatus.loading:
+              return _buildLoading();
+            case CalendarStateStatus.loadSuccess:
+            case CalendarStateStatus.loadMoreSuccess:
+            case CalendarStateStatus.loadingMore:
+              return _buildCalendar(state.loadFrom);
+            default:
+              return Container();
+          }
+
+        })
+    );
+  }
+  Widget _buildLoading() {
+    return Center(
+        child : Image(image: AppImages.loader)
+    );
+  }
+
+
+
+  Widget _buildCalendar(DateTime? loadFrom){
+    return CalendarsSelector((schedules){
+      print("calendar Selector");
+      inspect(schedules);
+      return SfCalendar(
+          view: CalendarView.day,
+          initialDisplayDate: loadFrom ?? DateTime.now(),
           onViewChanged: (ViewChangedDetails details) {
+            print("details ${details}");
             List<DateTime> dates = details.visibleDates;
-            calendarBloc.add(CalendarLoadStarted(from: dates[0],to:dates[0]));
+
+
+              // calendarBloc.add(CalendarLoadStarted(from: dates[0],to:dates[0]));
+            calendarBloc.add(CalendarLoadStarted(from: dates.first, to: dates.last));
+
             print("on view changed ${dates}");
           },
           // view: CalendarView.week,
@@ -53,10 +88,9 @@ class _UserCalendarState extends State<_UserCalendar> {
             print(element);
           },
           dataSource: ScheduleDataSource(schedules ?? [])
-          
-        );
-      })
-    );
+
+      );
+    });
   }
 }
 
@@ -97,5 +131,13 @@ class ScheduleDataSource extends CalendarDataSource {
   bool isAllDay(int index) {
     final SchedulePrimary schedule = appointments![index];
     return schedule.schedule.isAllDay;
+  }
+
+  @override
+  Future<void> handleLoadMore(DateTime startDate, DateTime endDate) async {
+    print("=== ${startDate} - ${endDate}");
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    notifyListeners(CalendarDataSourceAction.add,[]);
   }
 }

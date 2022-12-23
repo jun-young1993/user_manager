@@ -18,9 +18,10 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
   void _onLoadStarted(CalendarLoadStarted event, Emitter<CalendarState> emit) async {
     try{
-      emit(state.asloading());
-        print(event.from.toString());
-        print(event.to.toString());
+
+      if(state.isLoaded(event.from, event.to)) return;
+      emit(state.asloading(event.from, event.to));
+
       final List<SchedulePrimary> schedules =  await _scheduleRepository.index({
           "filter" : {
               "and" : [
@@ -41,6 +42,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       });
       print("onLoADsTARTED");
       inspect(schedules);
+
       emit(state.asLoadSuccess(schedules));
     } on Exception catch(e) {
       emit(state.asLoadFailure(e));

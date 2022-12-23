@@ -31,8 +31,10 @@ class ScheduleService {
       final Map<String,User> tmpUser = {};
       final List<SchedulePrimary> schedules = [];
       final results = result['results'];   
-
-
+      print("results ${results}");
+      if(results == null){
+        return schedules;
+      }
       for(int i=0; i<results.length; i++){
         
         String id = results[i]['id'];

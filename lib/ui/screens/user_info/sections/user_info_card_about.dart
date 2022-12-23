@@ -53,43 +53,43 @@ class _UserAboutState extends State<_UserAbout> {
                 isDark: isDark,
               ),
               SizedBox(height: 30),
-                _UserInfoContainer(
-                      children: [
-                        _UserInfoContainerChildren(label: "잔여 횟수", text: user.jobCount.toString()),
-                        _UserInfoContainerChildren( type: "row",children: [
-                          InkWell(
-                            borderRadius: BorderRadius.circular(1000.0),
-                            onTap : () {
-                                  print("plus +1");
-                                  
-                                  userBloc.add(CurrentUserUpdate(user.plusJobCount()));
-                            },
-                            child: Icon(
-                                Icons.arrow_circle_up_sharp,
-                                size: 30.0,
-                                color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(width: 30,),
-                          InkWell(
-                            borderRadius: BorderRadius.circular(1000.0),
-                            onTap : () {
-                                  print("plus +1");
-                                  if(user.jobCount != 0){
-                                    userBloc.add(CurrentUserUpdate(user.minusJobCount()));
-                                  }
-                            },
-                            child: Icon(
-                                Icons.arrow_circle_down_sharp,
-                                size: 30.0,
-                                color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(width: 10,),
-                        ]),
-                      ],
-                      isDark: isDark,
-                  ),
+                // _UserInfoContainer(
+                //       children: [
+                //         _UserInfoContainerChildren(label: "잔여 횟수", text: user.jobCount.toString()),
+                //         _UserInfoContainerChildren( type: "row",children: [
+                //           InkWell(
+                //             borderRadius: BorderRadius.circular(1000.0),
+                //             onTap : () {
+                //                   print("plus +1");
+                //
+                //                   userBloc.add(CurrentUserUpdate(user.plusJobCount()));
+                //             },
+                //             child: Icon(
+                //                 Icons.arrow_circle_up_sharp,
+                //                 size: 30.0,
+                //                 color: Colors.white,
+                //             ),
+                //           ),
+                //           SizedBox(width: 30,),
+                //           InkWell(
+                //             borderRadius: BorderRadius.circular(1000.0),
+                //             onTap : () {
+                //                   print("plus +1");
+                //                   if(user.jobCount != 0){
+                //                     userBloc.add(CurrentUserUpdate(user.minusJobCount()));
+                //                   }
+                //             },
+                //             child: Icon(
+                //                 Icons.arrow_circle_down_sharp,
+                //                 size: 30.0,
+                //                 color: Colors.white,
+                //             ),
+                //           ),
+                //           SizedBox(width: 10,),
+                //         ]),
+                //       ],
+                //       isDark: isDark,
+                //   ),
             ]
           )
         );

@@ -16,18 +16,32 @@ class CalendarState {
   final CalendarStateStatus status;
   final List<SchedulePrimary> schedules;
   final Exception? error;
+  final DateTime? loadFrom;
+  final DateTime? loadTo;
 
   const CalendarState._({
     this.status = CalendarStateStatus.initial,   
     this.schedules = const [],
     this.error,
+    this.loadFrom,
+    this.loadTo
   });
 
   const CalendarState.initial() : this._();
 
-  CalendarState asloading() {
+  bool isLoaded(DateTime from, DateTime to){
+    print("isLoaded this.loadFrom ${this.loadFrom}");
+    print("isLoaded from ${from}");
+    print("isLoaded this.loadTo ${this.loadTo}");
+    print("isLoaded to ${to}");
+    return ((this.loadFrom == from) && (this.loadTo == to));
+  }
+
+  CalendarState asloading(DateTime from, DateTime to) {
     return copyWith(
-      status : CalendarStateStatus.loading
+      status : CalendarStateStatus.loading,
+      loadFrom: from,
+      loadTo : to
     );
   }
   CalendarState asLoadSuccess(List<SchedulePrimary> schedules) {
@@ -35,7 +49,7 @@ class CalendarState {
       inspect(schedules);
       return copyWith(
         status: CalendarStateStatus.loadSuccess,
-        schedules: schedules
+        schedules: schedules,
       );
   }
 
@@ -50,11 +64,15 @@ class CalendarState {
       CalendarStateStatus? status,
       List<SchedulePrimary>? schedules,
       Exception? error,
+      DateTime? loadFrom,
+      DateTime? loadTo
     }) {
       return CalendarState._(
           status: status ?? this.status,
           schedules: schedules ?? this.schedules,
           error: error ?? this.error,
+          loadFrom: loadFrom ?? this.loadFrom,
+          loadTo : loadTo ?? this.loadTo
       );
   }
 }
