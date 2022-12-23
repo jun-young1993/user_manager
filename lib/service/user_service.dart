@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:user_manager/configs/colors.dart';
 import 'package:user_manager/configs/constants.dart';
 import 'package:user_manager/configs/statics/notion_database.dart';
 import 'package:user_manager/lib/notion/notion_client.dart';
@@ -44,11 +45,15 @@ class UserService {
         print("user job count ${property['job_count']['number']}");
         final int jobCount = property['job_count']['number'] ?? 0;
 
-
+        final List colorResponse = property['color']['rich_text'];
+        String color = UserColor.defaultColor.value.toString();
+        if(colorResponse.length != 0){
+          color = colorResponse[0]['text']['content'];
+        }
 
         
         String phoneNumber = property['phone_number']['phone_number'] ?? "-";   
-        users.add(User(id : id, name : name, phoneNumber: phoneNumber, description: description, jobCount: jobCount));
+        users.add(User(id : id, name : name, phoneNumber: phoneNumber, description: description, jobCount: jobCount, color: color));
       }
 
       return users;
@@ -73,10 +78,15 @@ class UserService {
         print("user job count ${property['job_count']['number']}");
         final int jobCount = property['job_count']['number'] ?? 0;
 
+        final List colorResponse = property['color']['rich_text'];
+        String color = UserColor.defaultColor.value.toString();
 
+        if(colorResponse.length != 0){
+          color = colorResponse[0]['text']['content'];
+        }
 
         String phoneNumber = property['phone_number']['phone_number'] ?? "-";   
-        final User user = User(id : id, name : name, phoneNumber: phoneNumber, description: description, jobCount: jobCount);
+        final User user = User(id : id, name : name, phoneNumber: phoneNumber, description: description, jobCount: jobCount, color:color);
         return user;
     }
 

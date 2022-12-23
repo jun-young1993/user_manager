@@ -18,7 +18,7 @@ class UserCard extends StatelessWidget {
     return LayoutBuilder(
       builder : (context, constrains){
         final itemHeight = constrains.maxHeight;
-        final Color userColor = UserColor.defaultColor;
+        final Color userColor = Color(int.parse(user.color));
         return Container(
             decoration: BoxDecoration(
             color:  userColor,

@@ -90,7 +90,7 @@ class ScheduleDataSource extends CalendarDataSource {
   @override
   Color getColor(int index) {
     final SchedulePrimary schedule = appointments![index];
-    return schedule.schedule.background ?? UserColor.defaultColor;
+    return Color(int.parse(schedule.schedule.user.color));
   }
 
   @override

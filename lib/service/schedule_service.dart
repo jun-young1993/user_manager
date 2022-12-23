@@ -140,51 +140,39 @@ class ScheduleService {
       return SchedulePrimary(id: id, schedule: data);
     }
 
-    Future<User> update(User data) async {
-      await client.pages.update(data.id,{
-          "parent": {
-              "database_id": scheduleDatabaseId
-          },
-          "properties": {
-              "name": {
-                  "rich_text": [
-                      {
-                          "text": {
-                              "content": data.name
-                          }
-                      }
-                  ]
-              },
-              "phone_number": {
-                  "phone_number": data.phoneNumber
-              },
-              "color" : {
-                 "rich_text": [
-                      {
-                          "text": {
-                              "content": data.color
-                          }
-                      }
-                  ]
-              },
-              "description" : {
-                "rich_text": [
-                      {
-                          "text": {
-                              "content": data.description
-                          }
-                      }
-                  ]
-              },
-              "disable" : {
-                "checkbox" : data.disable
-              },
-              "job_count" : {
-                "number" : data.jobCount
+    Future<SchedulePrimary> update(SchedulePrimary data) async {
+      final update = await client.pages.update(data.id,{
+        "parent": {
+          "database_id": scheduleDatabaseId
+        },
+        "properties": {
+          "description": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": data.schedule.eventName
+                }
               }
+            ]
+          },
+          "date": {
+            "date": {
+              "start" : data.schedule.from.toString(),
+              "end" : data.schedule.to.toString()
+            }
+          },
+          "user_id" : {
+            "rich_text": [
+              {
+                "text": {
+                  "content": data.schedule.user.id
+                }
+              }
+            ]
           }
+        }
       });
-  
+      print("update ${update}");
       return data;
     }
 

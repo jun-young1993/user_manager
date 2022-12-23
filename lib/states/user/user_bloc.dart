@@ -58,13 +58,18 @@ class UserBloc extends Bloc<UserEvent,UserState> {
 
     void _onCreated(UserCreated event, Emitter<UserState> emit) async {
       try{
+        emit(state.asloading());
+
+
+
 
         final UserProperty userProperty = event.user;
         final user = await _userRepository.create(userProperty);
     
         
         state.users.insert(0,user);
-        emit(state.copyWith(users: state.users));
+        emit(state.asLoadSuccess(state.users, canLoadMore: false));
+
         
       } on Exception catch (e) {
           
@@ -73,6 +78,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
 
     void _onUpdated(CurrentUserUpdate event, Emitter<UserState> emit ) async {
       try{
+        emit(state.asloading());
         final User user = event.user;
         final userIndex = state.users.indexWhere(
           (users) => users.id == user.id,
@@ -81,7 +87,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
         final update = await _userRepository.update(user);
         state.users[userIndex] = update;
         inspect(update);
-        emit(state.copyWith(users: state.users));
+        emit(state.asLoadSuccess(state.users, canLoadMore: false));
       } on Exception catch (e) {
 
       }

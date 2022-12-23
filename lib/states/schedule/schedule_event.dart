@@ -17,3 +17,8 @@ class ScheduleCreated extends ScheduleEvent {
   final Schedule schedule;
   const ScheduleCreated(this.schedule);
 }
+
+class ScheduleUpdated extends ScheduleEvent {
+  final SchedulePrimary schedule;
+  const ScheduleUpdated(this.schedule);
+}

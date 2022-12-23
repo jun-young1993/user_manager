@@ -88,11 +88,11 @@ class _BackgroundDecorationState extends State<_BackgroundDecoration> {
   }
 
   Widget _buildBackground() {
-    return CurrentUserSelector((pokemon) {
+    return CurrentUserSelector((user) {
       return AnimatedContainer(
         duration: Duration(milliseconds: 300),
         constraints: BoxConstraints.expand(),
-        color: UserColor.defaultColor,
+        color: Color(int.parse(user.color))
       );
     });
   }

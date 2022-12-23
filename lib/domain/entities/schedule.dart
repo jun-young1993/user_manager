@@ -22,9 +22,14 @@ class Schedule {
     return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
   }
   Schedule setFrom(DateTime from){
-    return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
+
+    return Schedule(user: user,eventName: eventName,from: from,to: DateTime(from.year,from.month,from.day,to.hour,to.minute,to.second),background: background,isAllDay: isAllDay);
   }
   Schedule setTo(DateTime to){
+    return Schedule(user: user,eventName: eventName,from: from,to: DateTime(from.year,from.month,from.day,to.hour,to.minute,to.second),background: background,isAllDay: isAllDay);
+  }
+
+  Schedule setEventName(String eventName){
     return Schedule(user: user,eventName: eventName,from: from,to: to,background: background,isAllDay: isAllDay);
   }
 
@@ -41,6 +46,9 @@ class SchedulePrimary {
   final Schedule schedule;
   setUser(User user){
     return SchedulePrimary(id: id, schedule: schedule.setUser(user));
+  }
+  SchedulePrimary setSchedule(Schedule schedule){
+    return SchedulePrimary(id: id, schedule: schedule);
   }
 }
 // class Schedule {
