@@ -9,44 +9,45 @@ import 'package:user_manager/states/calendar/calendar_state.dart';
 
 class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   final ScheduleRepository _scheduleRepository;
-  CalendarBloc(this._scheduleRepository) : super(CalendarState.initial()){
-    on<CalendarLoadStarted>(
-           _onLoadStarted, 
-        transformer : (events, mapper) => events.switchMap(mapper)
-    );
+  CalendarBloc(this._scheduleRepository) : super(CalendarState.initial()) {
+    on<CalendarLoadStarted>(_onLoadStarted,
+        transformer: (events, mapper) => events.switchMap(mapper));
   }
 
-  void _onLoadStarted(CalendarLoadStarted event, Emitter<CalendarState> emit) async {
-    try{
+  void _onLoadStarted(
+      CalendarLoadStarted event, Emitter<CalendarState> emit) async {
+    try {
+      if (state.isLoaded(event.from, event.to))
+        return emit(state.asLoadSuccess(state.schedules));
 
-      if(state.isLoaded(event.from, event.to)) return;
       emit(state.asloading(event.from, event.to));
 
-      final List<SchedulePrimary> schedules =  await _scheduleRepository.index({
-          "filter" : {
-              "and" : [
-                  {
-                      "property" : "date",
-                      "date" : {
-                          "on_or_after" : "${event.from.year}-${event.from.month}-${event.from.day}"
-                      }
-                  },{
-                      "property" : "date",
-                      "date" : {
-                          "on_or_before" : "${event.to.year}-${event.to.month}-${event.to.day}"
-                      }
-                  }
-              ]
-              
-          }
+      final List<SchedulePrimary> schedules = await _scheduleRepository.index({
+        "filter": {
+          "and": [
+            {
+              "property": "date",
+              "date": {
+                "on_or_after":
+                    "${event.from.year}-${event.from.month}-${event.from.day}"
+              }
+            },
+            {
+              "property": "date",
+              "date": {
+                "on_or_before":
+                    "${event.to.year}-${event.to.month}-${event.to.day}"
+              }
+            }
+          ]
+        }
       });
       print("onLoADsTARTED");
       inspect(schedules);
 
       emit(state.asLoadSuccess(schedules));
-    } on Exception catch(e) {
+    } on Exception catch (e) {
       emit(state.asLoadFailure(e));
     }
-
   }
 }

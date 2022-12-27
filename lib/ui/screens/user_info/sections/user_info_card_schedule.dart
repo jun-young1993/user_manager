@@ -12,8 +12,8 @@ part of '../user_info.dart';
 // }
 class _UserSchedule extends StatefulWidget {
   final User user;
-
-  const _UserSchedule(this.user);
+  final ScheduleEvent? loadEvent;
+  const _UserSchedule(this.user, {this.loadEvent});
 
   @override
   State<StatefulWidget> createState() => _UserScheduleState();
@@ -21,16 +21,20 @@ class _UserSchedule extends StatefulWidget {
 
 class _UserScheduleState extends State<_UserSchedule> {
   User get user => widget.user;
-
+  ScheduleEvent? get loadEvent => widget.loadEvent;
   // UserBloc get userBloc => context.read<UserBloc>();
   ScheduleBloc get scheduleBloc => context.read<ScheduleBloc>();
   UserBloc get userBloc => context.read<UserBloc>();
+
   // UserBloc get userBloc => context.read<UserBloc>();
   @override
   void initState() {
     super.initState();
-
-    scheduleBloc.add(ScheduleLoadStarted(user: user));
+    if (loadEvent != null) {
+      scheduleBloc.add(loadEvent!);
+    } else {
+      scheduleBloc.add(ScheduleLoadStarted(user: user));
+    }
   }
 
   @override
@@ -86,8 +90,7 @@ class _UserScheduleState extends State<_UserSchedule> {
 
   Widget _buildGrid(isDark) {
     return SchedulesSelector((schedules) {
-
-      if(schedules!.length == 0){
+      if (schedules!.length == 0) {
         return Text("등록된 일정이 없습니다.");
       }
       return Column(
@@ -133,30 +136,32 @@ class _UserScheduleState extends State<_UserSchedule> {
                             ),
                           ),
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            final DateTime currentDateTime = DateTime.now();
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          final DateTime currentDateTime =
+                                              DateTime.now();
 
-                                            return ScheduleForm(
-                                                schedule: schedule.schedule,
-                                                onPress: (updatedSchedule) {
-
-                                                  scheduleBloc.add(ScheduleUpdated(schedule.setSchedule(updatedSchedule)));
-                                                  // scheduleBloc.add(ScheduleCreated(schedule));
-                                                },
-                                                msg: "수정되었습니다.");
-                                          });
-                                    },
-                                    icon: Icon(Icons.edit))
-                              ],
-                            )
-                          )
+                                          return ScheduleForm(
+                                              schedule: schedule.schedule,
+                                              onPress: (updatedSchedule) {
+                                                scheduleBloc.add(
+                                                    ScheduleUpdated(
+                                                        schedule.setSchedule(
+                                                            updatedSchedule)));
+                                                // scheduleBloc.add(ScheduleCreated(schedule));
+                                              },
+                                              msg: "수정되었습니다.");
+                                        });
+                                  },
+                                  icon: Icon(Icons.edit))
+                            ],
+                          ))
                         ],
                       )),
                   SizedBox(
