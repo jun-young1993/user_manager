@@ -30,7 +30,7 @@ class _UserInfoCardState extends State<_UserInfoCard> {
         return MainTabView(paddingAnimation: slideController, tabs: [
           MainTabData(label: "회원 정보", child: _UserAbout()),
           MainTabData(
-              label: "일정 관리",
+              label: "이후 일정",
               child: _UserSchedule(
                 user,
                 loadEvent: ScheduleAfterLoadStarted(user: user),
