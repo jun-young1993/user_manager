@@ -25,6 +25,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
       ScheduleBeforeLoadStarted event, Emitter<ScheduleState> emit) async {
     try {
       final DateTime currentDate = DateTime.now();
+
       emit(state.asloading());
       final List<SchedulePrimary> schedules = await _scheduleRepository.index({
         "filter": {
@@ -35,10 +36,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
             },
             {
               "property": "date",
-              "date": {
-                "on_or_before":
-                    "${currentDate.year}-${currentDate.month}-${currentDate.day}"
-              }
+              "date": {"before": currentDate.toIso8601String()}
             }
           ]
         }
@@ -65,10 +63,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
             },
             {
               "property": "date",
-              "date": {
-                "on_or_after":
-                    "${currentDate.year}-${currentDate.month}-${currentDate.day}"
-              }
+              "date": {"on_or_after": currentDate.toIso8601String()}
             },
           ]
         }
