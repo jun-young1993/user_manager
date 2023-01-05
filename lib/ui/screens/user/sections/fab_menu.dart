@@ -51,6 +51,19 @@ class _FabMenuState extends State<_FabMenu> with SingleTickerProviderStateMixin 
       callback?.call();
     }
 
+    void _sendSMS() async {
+      Uri sms = Uri.parse('sms:+82 1037385396,+82 1037385396?body=your+text+here');
+      // if(Platform.isAndroid){
+        print('before is android');
+        bool test = await launchUrl(sms);
+        print("send sms ${test}");
+      // }else{
+
+      // }
+      
+      
+    }
+
     @override
     Widget build(BuildContext context){
       final safeAreaBottom = MediaQuery.of(context).padding.bottom;
@@ -74,7 +87,9 @@ class _FabMenuState extends State<_FabMenu> with SingleTickerProviderStateMixin 
                       showUserDialog(context);
                     }),
                   ),
-
+                  FabItemData('문자 전송', Icons.message,onPress:(){
+                      _sendSMS();
+                  },)
                 ]
               )
         )

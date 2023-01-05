@@ -5,7 +5,7 @@ import 'package:user_manager/service/user_service.dart';
 import 'package:user_manager/states/user/user_event.dart';
 import 'package:user_manager/states/user/user_state.dart';
 import 'package:user_manager/data/repositories/user_repository.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:developer';
 
 class UserBloc extends Bloc<UserEvent,UserState> {
