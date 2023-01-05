@@ -32,7 +32,8 @@ class User{
     this.color = "0xFFA8A878",
     this.description = "no description",
     this.disable = false,
-    this.jobCount = 0
+    this.jobCount = 0,
+    this.checked = false
   });
 
   final String id;
@@ -42,12 +43,17 @@ class User{
   final String description;
   final bool disable;
   final int jobCount;
+  final bool checked;
 
   User plusJobCount(){
-    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount+1);
+    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount+1, checked: checked);
   }
   User minusJobCount(){
-    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount-1);
+    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount-1, checked: checked);
+  }
+
+  User setCheck(bool checked){
+    return User(id:id,name:name,phoneNumber: phoneNumber,color: color,description: description,disable: disable,jobCount: jobCount, checked: checked);
   }
 
 

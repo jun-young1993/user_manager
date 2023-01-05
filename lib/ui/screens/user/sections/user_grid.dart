@@ -29,6 +29,11 @@ class _UserGridState extends State<_UserGrid>{
     print("onUserPress User ${user}");
     AppNavigator.push(Routes.userInfo, user);
   }
+  
+  void _onChecked(User user, bool checked) {
+    print('checked ${checked}');
+    userBloc.add(UserCheckChanged(id:user.id, checked: checked));
+  }
 
   @override
   Widget build(BuildContext context){
@@ -87,6 +92,7 @@ class _UserGridState extends State<_UserGrid>{
                     return UserCard(
                       user,
                       onPress : () => _onUserPress(user),
+                      onChecked :  _onChecked
                     );
                   });
                 },

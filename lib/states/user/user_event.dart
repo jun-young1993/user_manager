@@ -18,6 +18,12 @@ class UserSelectChanged extends UserEvent {
   const UserSelectChanged({required this.id});
 }
 
+class UserCheckChanged extends UserEvent {
+  final String id;
+  final bool checked;
+  const UserCheckChanged({required this.id, required this.checked});
+}
+
 
 class UserCreated extends UserEvent {
   final UserProperty user;

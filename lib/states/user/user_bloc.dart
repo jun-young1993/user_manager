@@ -19,6 +19,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
       on<UserSelectChanged>(_onSelectChanged);
       on<UserCreated>(_onCreated);
       on<CurrentUserUpdate>(_onUpdated);
+      on<UserCheckChanged>(_onChecked);
     }
 
     void _onLoadStarted(UserLoadStarted event, Emitter<UserState> emit) async {
@@ -87,6 +88,22 @@ class UserBloc extends Bloc<UserEvent,UserState> {
         final update = await _userRepository.update(user);
         state.users[userIndex] = update;
         inspect(update);
+        emit(state.asLoadSuccess(state.users, canLoadMore: false));
+      } on Exception catch (e) {
+
+      }
+    }
+
+    void _onChecked(UserCheckChanged event, Emitter<UserState> emit) async {
+      try{
+        emit(state.asloading());
+        final userIndex = state.users.indexWhere(
+          (users) => users.id == event.id,
+        );
+        if (userIndex < 0 || userIndex >= state.users.length) return;
+
+        state.users[userIndex] = state.users[userIndex].setCheck(event.checked);
+        print('checked complete ${state.users[userIndex].checked}');
         emit(state.asLoadSuccess(state.users, canLoadMore: false));
       } on Exception catch (e) {
 
