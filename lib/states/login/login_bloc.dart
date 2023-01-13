@@ -27,12 +27,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       
   }
 
-  void _onLoadStarted(
+  void _onLoadStarted (
     LoginStarted event, Emitter<LoginState> emit
   ) async {
     try{
       emit(state.asloading());
-      _loginRepository.login();
+      await _loginRepository.login();
       emit(state.asLoadSuccess());
       
       AppNavigator.pop();

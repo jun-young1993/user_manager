@@ -4,11 +4,11 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 
 abstract class LoginRepository {
-  void login();
+  Future<void> login();
 }
 
 class LoginDefaultRepository extends LoginRepository {
-  void login() async {
+  Future<void> login() async {
     if (await isKakaoTalkInstalled()) {
               try {
                 await UserApi.instance.loginWithKakaoTalk();
