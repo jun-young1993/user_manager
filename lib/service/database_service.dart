@@ -36,6 +36,41 @@ class DatabaseService {
       return Database(id: result['id'], name: data.name, phoneNumber: data.phoneNumber);
     }
 
+    Future<List<Database>> schemas() async {
+      final results = await client.databases.query(databaseId);
+      final List<Database> schemas = [];
+
+      for(int i = 0; i<results.length; i++) {
+        String id = results[i]['id'];
+
+        Map property = results[i]['properties'];
+
+        final List nameResponse = property['name']['rich_text'];
+        String name = "no name";
+        if(nameResponse.length != 0){
+          name = nameResponse[0]['text']['content'];
+        }
+
+        String phoneNumber = property['phone_number']['phone_number'] ?? "-";   
+
+        final List usersResponse = property['users']['rich_text'];
+        String? users;
+        if(usersResponse.length != 0){
+          users = usersResponse[0]['text']['content'];
+        }
+
+        final List scheduleResponse = property['name']['rich_text'];
+        String? schedule;
+        if(scheduleResponse.length != 0){
+          schedule = scheduleResponse[0]['text']['content'];
+        }
+
+        schemas.add(Database(id: id,name: name,phoneNumber: phoneNumber,users: users,schedule: schedule));
+      }
+
+      return schemas;
+    }
+
     
     
     Future<DatabaseId> create(DatabaseProperty data) async {

@@ -23,13 +23,39 @@ class Database{
     required this.id,
     required this.name,
     required this.phoneNumber,
+    this.users,
+    this.schedule
   });
   
   final String id;
   final String name;
   final String phoneNumber;
+  final String? users;
+  final String? schedule;
 
 
+  factory Database.fromJson(Map<String, dynamic> json) {
+    print("$json");
+    return Database(
+      id : json['id'],
+      name: json['name'],
+      phoneNumber: json['phoneNumber'],
+      schedule: json['schedule'],
+      users: json['user']
+    );
+  }
+
+  bool isEqual(Database database) {
+    return id == database.id;
+  }
+
+  static List<Database> fromJsonList(List list) {
+    print("list => ${list}");
+    return list.map((item) => Database.fromJson(item)).toList();
+  }
+
+  @override
+  String toString() => name;
   // const Database({
   //   required this.id,
   //   required this.name,

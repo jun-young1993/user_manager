@@ -63,16 +63,34 @@ class _HeaderCardContent extends StatelessWidget {
           constraints: const BoxConstraints.expand(),
           padding: const EdgeInsets.all(28),
           alignment: Alignment.bottomLeft,
-          child: const Text(
-            'User Manager Category?',
-            style: TextStyle(
-              fontSize: 30,
-              height: 1.6,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
+          child:  DropdownSearch<Database>(
+                    asyncItems : (String? filter) => getData(filter),
+                    compareFn : (i , s) => i.isEqual(s)
+                  ),
+          // const Text(
+          //   'User Manager Category?',
+          //   style: TextStyle(
+          //     fontSize: 30,
+          //     height: 1.6,
+          //     fontWeight: FontWeight.w900,
+          //   ),
+          // ),
+        )
       );
+    }
+
+    Future<List<Database>> getData(String? filter) async {
+      
+      final List<Database> result = await DatabaseService().schemas();
+      print("result");
+      print(result);
+      if(result.length == 0){
+        return [];
+      }
+      final List<Database> r = Database.fromJsonList(result);
+      
+      
+      return r;
     }
 
     Widget _buildCategories(BuildContext context) {
