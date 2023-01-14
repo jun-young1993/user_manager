@@ -17,7 +17,7 @@ class ScheduleService {
     // static final storage = FlutterSecureStorage(); 
     
     // final String userDatabaseId = "6828ab9b03c0405a8090d9e99dd3881b";
-    final String scheduleDatabaseId = NotionDatabase.scheduleId;
+    final String scheduleDatabaseId = NotionDatabase.scheduleId!;
     
     NotionClient client = NotionClient();
     

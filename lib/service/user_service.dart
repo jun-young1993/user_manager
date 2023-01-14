@@ -14,7 +14,7 @@ class UserService {
     // static final storage = FlutterSecureStorage(); 
     
     // final String userDatabaseId = "6828ab9b03c0405a8090d9e99dd3881b";
-    final String userDatabaseId = NotionDatabase.userId;
+    final String userDatabaseId = NotionDatabase.userId!;
     
     NotionClient client = NotionClient();
     

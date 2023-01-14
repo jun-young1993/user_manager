@@ -47,7 +47,7 @@ class _HeaderCardContent extends StatelessWidget {
                   ),
                 )
               ),
-              _buildTitle(),
+              _buildTitle(context),
               _buildCategories(context)
 
             ],
@@ -57,7 +57,7 @@ class _HeaderCardContent extends StatelessWidget {
       );
     }
 
-    Widget _buildTitle() {
+    Widget _buildTitle(context) {
       return Expanded(
         child: Container(
           constraints: const BoxConstraints.expand(),
@@ -65,7 +65,28 @@ class _HeaderCardContent extends StatelessWidget {
           alignment: Alignment.bottomLeft,
           child:  DropdownSearch<Database>(
                     asyncItems : (String? filter) => getData(filter),
-                    compareFn : (i , s) => i.isEqual(s)
+                    compareFn : (i , s) => i.isEqual(s),
+                    onChanged: (Database? database) {
+
+
+
+
+                        if(database != null){
+                          NotionDatabase.userId = database.users;
+                          NotionDatabase.schemaId = database.id;
+                          NotionDatabase.scheduleId = database.schedule;
+                        }
+
+
+
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //     SnackBar(
+                        //       content: Text("등록된 데이터가 없습니다 관리자에게 문의해주세요."),
+                        //     )
+                        // );
+
+
+                    },
                   ),
           // const Text(
           //   'User Manager Category?',
