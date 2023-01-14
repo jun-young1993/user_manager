@@ -34,14 +34,14 @@ class Database{
   final String? schedule;
 
 
-  factory Database.fromJson(Map<String, dynamic> json) {
-    print("$json");
+  factory Database.fromJson(Database database) {
+
     return Database(
-      id : json['id'],
-      name: json['name'],
-      phoneNumber: json['phoneNumber'],
-      schedule: json['schedule'],
-      users: json['user']
+      id : database.id,
+      name: database.name,
+      phoneNumber: database.phoneNumber,
+      schedule: database.schedule,
+      users: database.users
     );
   }
 
@@ -50,7 +50,7 @@ class Database{
   }
 
   static List<Database> fromJsonList(List list) {
-    print("list => ${list}");
+
     return list.map((item) => Database.fromJson(item)).toList();
   }
 

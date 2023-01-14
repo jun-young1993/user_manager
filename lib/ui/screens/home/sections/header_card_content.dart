@@ -80,10 +80,9 @@ class _HeaderCardContent extends StatelessWidget {
     }
 
     Future<List<Database>> getData(String? filter) async {
-      
       final List<Database> result = await DatabaseService().schemas();
-      print("result");
-      print(result);
+
+
       if(result.length == 0){
         return [];
       }

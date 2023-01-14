@@ -37,10 +37,12 @@ class DatabaseService {
     }
 
     Future<List<Database>> schemas() async {
-      final results = await client.databases.query(databaseId);
+      print("before schemas");
+      final result = await client.databases.query(databaseId);
       final List<Database> schemas = [];
-
+      final results = result['results'];
       for(int i = 0; i<results.length; i++) {
+
         String id = results[i]['id'];
 
         Map property = results[i]['properties'];
@@ -64,10 +66,11 @@ class DatabaseService {
         if(scheduleResponse.length != 0){
           schedule = scheduleResponse[0]['text']['content'];
         }
-
+        print("befor add schemas ${Database(id: id,name: name,phoneNumber: phoneNumber,users: users,schedule: schedule)}");
         schemas.add(Database(id: id,name: name,phoneNumber: phoneNumber,users: users,schedule: schedule));
+        print("after add schemas");
       }
-
+      print("after schmas");
       return schemas;
     }
 
