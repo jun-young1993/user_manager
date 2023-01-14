@@ -16,7 +16,13 @@ class AppImages {
   static const dotted = _Image('dotted.png');
   static const thumbnail = _Image('thumbnail.png');
   // static const pikloader = _Image('pika_loader.gif');
+
+  // 여기부턴 내꺼
   static const loader = _Image('pika_loader.gif');
+  static const kakaoLoginlarge = _Image('kakao_login_large_wide.png');
+
+
+
 
   static Future precacheAssets(BuildContext context) async {
     await precacheImage(bulbasaur, context);
@@ -28,5 +34,6 @@ class AppImages {
     await precacheImage(dotted, context);
     await precacheImage(thumbnail, context);
     await precacheImage(loader, context);
+    await precacheImage(kakaoLoginlarge, context);
   }
 }

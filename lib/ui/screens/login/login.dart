@@ -112,6 +112,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Center(child: Image(image: AppImages.loader));
   }
   Widget _buildInit(){
+    return InkWell(
+        onTap: () async {
+          loginBloc.add(LoginStarted());
+        },
+        child: Image(image: AppImages.kakaoLoginlarge)
+    );
     return TextButton(
       child: Text("카카오 로그인"),
       onPressed: () async {
